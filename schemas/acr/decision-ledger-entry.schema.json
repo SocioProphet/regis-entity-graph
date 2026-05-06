@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.socioprophet.org/regis/acr/decision-ledger-entry.schema.json",
+  "title": "DecisionLedgerEntry",
+  "type": "object",
+  "required": ["decision_id", "decision_type", "policy_id", "outcome", "created_at", "evidence_refs", "canonical_mutation"],
+  "properties": {
+    "decision_id": { "type": "string" },
+    "decision_type": { "type": "string", "enum": ["source_record_ingested", "concordance_proposed", "match_accepted", "match_rejected", "promotion_evaluated", "canonical_promoted", "merge", "split", "relationship_formed", "relationship_rejected", "override", "appeal_opened", "appeal_resolved"] },
+    "policy_id": { "type": "string" },
+    "actor_ref": { "type": "string" },
+    "agent_ref": { "type": "string" },
+    "outcome": { "type": "string" },
+    "reason_codes": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "evidence_refs": { "type": "array", "items": { "type": "string" } },
+    "source_record_refs": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "concordance_link_refs": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "energy_ledger_refs": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "ontogenesis_refs": {
+      "type": "object",
+      "properties": {
+        "governance_act_id": { "type": "string" },
+        "genesis_event_id": { "type": "string" },
+        "derivation_path_id": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "review_state": { "type": "string", "enum": ["not_required", "required", "in_review", "approved", "rejected", "appealed"], "default": "not_required" },
+    "appeal_ref": { "type": "string" },
+    "canonical_mutation": { "type": "boolean" },
+    "replay": {
+      "type": "object",
+      "required": ["policy_version", "input_hashes"],
+      "properties": {
+        "policy_version": { "type": "string" },
+        "input_hashes": { "type": "array", "items": { "type": "string" } },
+        "tool_version": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "created_at": { "type": "string", "format": "date-time" }
+  },
+  "additionalProperties": false
+}
