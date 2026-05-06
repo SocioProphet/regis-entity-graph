@@ -1,0 +1,20 @@
+{
+  "entity_id": "canonical:acme-cooperative-foods-ltd",
+  "entity_type": "organization",
+  "status": "pending_review",
+  "policy_id": "policy://regis-acr/default-promotion@0.1.0",
+  "identity_prime_scopes": ["P_VENDOR", "P_SUPPLY_CHAIN"],
+  "attributes": {
+    "name": "Acme Cooperative Foods Ltd",
+    "country": "GB",
+    "entity_role": "supplier"
+  },
+  "source_record_refs": ["src:tesco:supplier:0001"],
+  "evidence_claim_refs": ["evidenceclaim:src:tesco:supplier:0001:primary"],
+  "decision_ledger_refs": ["decision:src:tesco:supplier:0001:concordance-proposed"],
+  "ontogenesis_refs": {
+    "entity_formation_record_id": "entity-formation:canonical:acme-cooperative-foods-ltd",
+    "genesis_event_id": "genesis:demo:acme-cooperative-foods-ltd",
+    "derivation_path_id": "derivation:demo:src-tesco-supplier-0001"
+  }
+}
