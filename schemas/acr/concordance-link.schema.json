@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.socioprophet.org/regis/acr/concordance-link.schema.json",
+  "title": "ConcordanceLink",
+  "type": "object",
+  "required": ["concordance_link_id", "source_record_id", "candidate_entity_id", "status", "score", "policy_id", "decision_ledger_refs"],
+  "properties": {
+    "concordance_link_id": { "type": "string" },
+    "source_record_id": { "type": "string" },
+    "candidate_entity_id": { "type": "string" },
+    "status": { "type": "string", "enum": ["active", "pending_review", "rejected", "superseded", "disputed"] },
+    "score": { "type": "number", "minimum": 0 },
+    "confidence_band": { "type": "string", "enum": ["low", "medium", "high", "exact", "unknown"], "default": "unknown" },
+    "resolver_run_id": { "type": "string" },
+    "energy_ledger_ref": { "type": "string" },
+    "policy_id": { "type": "string" },
+    "explanation_codes": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "canonical_mutation": { "type": "boolean", "default": false },
+    "decision_ledger_refs": { "type": "array", "items": { "type": "string" }, "minItems": 1 }
+  },
+  "additionalProperties": false
+}
