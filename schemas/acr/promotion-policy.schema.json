@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.socioprophet.org/regis/acr/promotion-policy.schema.json",
+  "title": "PromotionPolicy",
+  "type": "object",
+  "required": ["policy_id", "version", "status", "gates"],
+  "properties": {
+    "policy_id": { "type": "string" },
+    "version": { "type": "string" },
+    "status": { "type": "string", "enum": ["draft", "active", "deprecated", "retired"] },
+    "description": { "type": "string" },
+    "gates": {
+      "type": "object",
+      "required": ["review_threshold", "insert_threshold", "margin_threshold", "max_flip_rate"],
+      "properties": {
+        "review_threshold": { "type": "number" },
+        "insert_threshold": { "type": "number" },
+        "margin_threshold": { "type": "number" },
+        "max_flip_rate": { "type": "number", "minimum": 0, "maximum": 1 }
+      },
+      "additionalProperties": false
+    },
+    "allowed_decisions": {
+      "type": "array",
+      "items": { "type": "string", "enum": ["reject", "review", "insert_evidence_only", "promote_canonical"] },
+      "default": ["reject", "review", "insert_evidence_only"]
+    },
+    "canonical_promotion_requires_review": { "type": "boolean", "default": true },
+    "positive_evidence_only_default": { "type": "boolean", "default": true },
+    "forbidden_identity_prime_mixtures": {
+      "type": "array",
+      "items": {
+        "type": "array",
+        "items": { "type": "string" },
+        "minItems": 2
+      },
+      "default": []
+    }
+  },
+  "additionalProperties": false
+}
