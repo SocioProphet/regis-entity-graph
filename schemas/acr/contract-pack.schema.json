@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.socioprophet.org/regis/acr/contract-pack.schema.json",
+  "title": "ACR Contract Pack",
+  "type": "object",
+  "required": ["schema_version", "contract_pack_id", "contracts", "invariants"],
+  "properties": {
+    "schema_version": { "type": "string" },
+    "contract_pack_id": { "type": "string" },
+    "status": { "type": "string" },
+    "owner_repo": { "type": "string" },
+    "contracts": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["path", "owner", "description"],
+        "properties": {
+          "path": { "type": "string" },
+          "owner": { "type": "string" },
+          "description": { "type": "string" },
+          "required_examples": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "invariants": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "statement"],
+        "properties": {
+          "id": { "type": "string" },
+          "statement": { "type": "string" }
+        }
+      }
+    }
+  }
+}
