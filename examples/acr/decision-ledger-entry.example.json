@@ -1,0 +1,25 @@
+{
+  "decision_id": "decision:src:tesco:supplier:0001:concordance-proposed",
+  "decision_type": "concordance_proposed",
+  "policy_id": "policy://regis-acr/default-promotion@0.1.0",
+  "actor_ref": "steward://demo/regis",
+  "agent_ref": "agent://prophet-platform/regis-acr-api",
+  "outcome": "pending_review",
+  "reason_codes": ["proposal_only", "no_auto_canonical_merge", "identity_prime_scope_protection"],
+  "evidence_refs": ["evidenceclaim:src:tesco:supplier:0001:primary"],
+  "source_record_refs": ["src:tesco:supplier:0001"],
+  "concordance_link_refs": ["concordance:src:tesco:supplier:0001:canonical:acme-cooperative-foods-ltd"],
+  "energy_ledger_refs": [],
+  "ontogenesis_refs": {
+    "governance_act_id": "governance-act:demo:concordance-proposed",
+    "derivation_path_id": "derivation:demo:src-tesco-supplier-0001"
+  },
+  "review_state": "required",
+  "canonical_mutation": false,
+  "replay": {
+    "policy_version": "0.1.0",
+    "input_hashes": ["sha256:demo-source-record-fingerprint"],
+    "tool_version": "regis-acr-api@0.1.0"
+  },
+  "created_at": "2026-05-06T00:00:00Z"
+}
