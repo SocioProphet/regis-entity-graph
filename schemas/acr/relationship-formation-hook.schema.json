@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.socioprophet.org/regis/acr/relationship-formation-hook.schema.json",
+  "title": "RelationshipFormationHook",
+  "type": "object",
+  "required": ["relationship_formation_hook_id", "relationship_type", "subject_entity_ref", "object_entity_ref", "status", "policy_id", "decision_ledger_refs", "ontogenesis_bindings"],
+  "properties": {
+    "relationship_formation_hook_id": { "type": "string" },
+    "relationship_type": { "type": "string" },
+    "subject_entity_ref": { "type": "string" },
+    "object_entity_ref": { "type": "string" },
+    "status": { "type": "string", "enum": ["proposed", "active", "disputed", "revoked", "superseded", "retired"] },
+    "evidence_claim_refs": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "decision_ledger_refs": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+    "validity_interval": {
+      "type": "object",
+      "properties": {
+        "valid_from": { "type": "string", "format": "date-time" },
+        "valid_to": { "type": "string", "format": "date-time" }
+      },
+      "additionalProperties": false
+    },
+    "policy_id": { "type": "string" },
+    "ontogenesis_bindings": {
+      "type": "object",
+      "required": ["genesis_event_required", "validity_interval_required", "derivation_path_required"],
+      "properties": {
+        "genesis_event_required": { "type": "boolean" },
+        "validity_interval_required": { "type": "boolean" },
+        "derivation_path_required": { "type": "boolean" },
+        "genesis_event_id": { "type": "string" },
+        "derivation_path_id": { "type": "string" },
+        "relationship_formation_record_id": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "canonical_mutation": { "type": "boolean", "default": false }
+  },
+  "additionalProperties": false
+}
