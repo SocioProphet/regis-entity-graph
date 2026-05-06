@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.socioprophet.org/regis/acr/source-record.schema.json",
+  "title": "SourceRecord",
+  "type": "object",
+  "required": ["source_record_id", "source_system", "record_type", "raw_payload", "ingested_at", "policy_id"],
+  "properties": {
+    "source_record_id": { "type": "string" },
+    "source_system": { "type": "string" },
+    "record_type": { "type": "string", "enum": ["person", "organization", "device", "agent", "dataset", "place", "event", "credential", "document", "relationship", "other"] },
+    "raw_payload": { "type": "object", "additionalProperties": true },
+    "normalized_payload": { "type": "object", "additionalProperties": true, "default": {} },
+    "source_contract_id": { "type": "string" },
+    "validation_report": {
+      "type": "object",
+      "properties": {
+        "valid": { "type": "boolean" },
+        "warnings": { "type": "array", "items": { "type": "string" }, "default": [] },
+        "errors": { "type": "array", "items": { "type": "string" }, "default": [] }
+      },
+      "additionalProperties": false
+    },
+    "identity_prime_scopes": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "lineage": {
+      "type": "object",
+      "properties": {
+        "import_batch_id": { "type": "string" },
+        "upstream_ref": { "type": "string" },
+        "document_fingerprint": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "ingested_at": { "type": "string", "format": "date-time" },
+    "policy_id": { "type": "string" }
+  },
+  "additionalProperties": false
+}
