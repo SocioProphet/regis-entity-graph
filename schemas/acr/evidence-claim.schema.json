@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.socioprophet.org/regis/acr/evidence-claim.schema.json",
+  "title": "EvidenceClaim",
+  "type": "object",
+  "required": ["evidence_claim_id", "claim_type", "subject_ref", "provenance", "confidence", "policy_id", "created_at"],
+  "properties": {
+    "evidence_claim_id": { "type": "string" },
+    "claim_type": { "type": "string", "enum": ["source_record_observed", "attribute_asserted", "relationship_asserted", "document_extracted", "event_derived", "credential_verified", "stewardship_action", "lifecycle_asserted", "other"] },
+    "subject_ref": { "type": "string" },
+    "predicate": { "type": "string" },
+    "object_value": {},
+    "source_record_id": { "type": "string" },
+    "scope": {
+      "type": "object",
+      "properties": {
+        "realm": { "type": "string" },
+        "jurisdiction": { "type": "string" },
+        "identity_prime_scopes": { "type": "array", "items": { "type": "string" }, "default": [] }
+      },
+      "additionalProperties": true
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["source", "method"],
+      "properties": {
+        "source": { "type": "string" },
+        "method": { "type": "string" },
+        "extractor_version": { "type": "string" },
+        "document_fingerprint": { "type": "string" },
+        "offsets": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "start": { "type": "integer", "minimum": 0 },
+              "end": { "type": "integer", "minimum": 0 }
+            },
+            "additionalProperties": false
+          },
+          "default": []
+        }
+      },
+      "additionalProperties": true
+    },
+    "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+    "policy_id": { "type": "string" },
+    "created_at": { "type": "string", "format": "date-time" }
+  },
+  "additionalProperties": false
+}
