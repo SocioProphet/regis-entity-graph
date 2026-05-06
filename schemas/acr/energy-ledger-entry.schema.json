@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.socioprophet.org/regis/acr/energy-ledger-entry.schema.json",
+  "title": "EnergyLedgerEntry",
+  "type": "object",
+  "required": ["energy_ledger_id", "resolver_run_id", "candidate_id", "top_score", "runnerup_score", "margin_delta", "winner_flip_rate", "promotion_decision", "policy_id", "created_at"],
+  "properties": {
+    "energy_ledger_id": { "type": "string" },
+    "resolver_run_id": { "type": "string" },
+    "candidate_id": { "type": "string" },
+    "top_entity_id": { "type": "string" },
+    "runnerup_entity_id": { "type": "string" },
+    "top_score": { "type": "number", "minimum": 0 },
+    "runnerup_score": { "type": "number", "minimum": 0 },
+    "margin_delta": { "type": "number" },
+    "winner_flip_rate": { "type": "number", "minimum": 0, "maximum": 1 },
+    "candidate_count": { "type": "integer", "minimum": 0 },
+    "claim_count_total": { "type": "integer", "minimum": 0 },
+    "positive_evidence_only": { "type": "boolean", "default": true },
+    "thresholds": {
+      "type": "object",
+      "properties": {
+        "review_threshold": { "type": "number" },
+        "insert_threshold": { "type": "number" },
+        "margin_threshold": { "type": "number" },
+        "max_flip_rate": { "type": "number" }
+      },
+      "additionalProperties": false
+    },
+    "promotion_allowed": { "type": "boolean", "default": false },
+    "promotion_decision": { "type": "string", "enum": ["reject", "review", "insert_evidence_only", "promote_canonical", "blocked_or_review_required", "eligible_for_evidence_only_insert"] },
+    "policy_id": { "type": "string" },
+    "created_at": { "type": "string", "format": "date-time" }
+  },
+  "additionalProperties": false
+}
