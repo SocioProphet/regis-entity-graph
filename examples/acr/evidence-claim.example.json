@@ -1,0 +1,23 @@
+{
+  "evidence_claim_id": "evidenceclaim:src:tesco:supplier:0001:primary",
+  "claim_type": "source_record_observed",
+  "subject_ref": "source-record://tesco-supplier-master-demo/src:tesco:supplier:0001",
+  "predicate": "supplier_name",
+  "object_value": "Acme Cooperative Foods Ltd",
+  "source_record_id": "src:tesco:supplier:0001",
+  "scope": {
+    "realm": "FOG",
+    "jurisdiction": "GB",
+    "identity_prime_scopes": ["P_VENDOR", "P_SUPPLY_CHAIN"]
+  },
+  "provenance": {
+    "source": "tesco-supplier-master-demo",
+    "method": "source_record_ingest",
+    "extractor_version": "regis-acr-api@0.1.0",
+    "document_fingerprint": "sha256:demo-source-record-fingerprint",
+    "offsets": []
+  },
+  "confidence": 1.0,
+  "policy_id": "policy://regis-acr/default-promotion@0.1.0",
+  "created_at": "2026-05-06T00:00:00Z"
+}
