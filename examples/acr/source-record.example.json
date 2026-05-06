@@ -1,0 +1,30 @@
+{
+  "source_record_id": "src:tesco:supplier:0001",
+  "source_system": "tesco-supplier-master-demo",
+  "record_type": "organization",
+  "raw_payload": {
+    "supplier_name": "Acme Cooperative Foods Ltd",
+    "supplier_number": "SUP-0001",
+    "country": "GB",
+    "contact_email": "ops@example.invalid"
+  },
+  "normalized_payload": {
+    "name": "Acme Cooperative Foods Ltd",
+    "supplier_number": "SUP-0001",
+    "country": "GB"
+  },
+  "source_contract_id": "contract://regis-acr/source-record@0.1.0",
+  "validation_report": {
+    "valid": true,
+    "warnings": [],
+    "errors": []
+  },
+  "identity_prime_scopes": ["P_VENDOR", "P_SUPPLY_CHAIN"],
+  "lineage": {
+    "import_batch_id": "batch:demo:2026-05-06",
+    "upstream_ref": "demo://tesco/suppliers/SUP-0001",
+    "document_fingerprint": "sha256:demo-source-record-fingerprint"
+  },
+  "ingested_at": "2026-05-06T00:00:00Z",
+  "policy_id": "policy://regis-acr/default-promotion@0.1.0"
+}
