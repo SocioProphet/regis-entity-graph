@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.socioprophet.org/regis/acr/canonical-entity.schema.json",
+  "title": "CanonicalEntity",
+  "type": "object",
+  "required": ["entity_id", "entity_type", "status", "policy_id", "decision_ledger_refs", "attributes"],
+  "properties": {
+    "entity_id": { "type": "string" },
+    "entity_type": { "type": "string", "enum": ["person", "organization", "device", "agent", "dataset", "place", "role", "relationship", "other"] },
+    "status": { "type": "string", "enum": ["active", "pending_review", "disputed", "superseded", "retired"] },
+    "policy_id": { "type": "string" },
+    "identity_prime_scopes": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "attributes": { "type": "object", "additionalProperties": true },
+    "source_record_refs": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "evidence_claim_refs": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "decision_ledger_refs": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+    "ontogenesis_refs": {
+      "type": "object",
+      "properties": {
+        "entity_formation_record_id": { "type": "string" },
+        "genesis_event_id": { "type": "string" },
+        "derivation_path_id": { "type": "string" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}
