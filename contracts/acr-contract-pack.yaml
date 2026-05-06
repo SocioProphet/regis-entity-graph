@@ -1,0 +1,77 @@
+schema_version: 0.1.0
+contract_pack_id: regis-acr-contract-pack
+status: draft
+owner_repo: SocioProphet/regis-entity-graph
+spec: docs/specs/acr-entity-evidence-concordance-v0.1.md
+schema: schemas/acr/contract-pack.schema.json
+
+contracts:
+  CanonicalEntity:
+    path: schemas/acr/canonical-entity.schema.json
+    owner: SocioProphet/regis-entity-graph
+    description: Stable entity projection derived from source records, evidence, concordance links, and decision-ledger entries under versioned policy.
+    required_examples:
+      - examples/acr/canonical-entity.example.json
+
+  SourceRecord:
+    path: schemas/acr/source-record.schema.json
+    owner: SocioProphet/regis-entity-graph
+    description: Preserved source assertion with raw payload, normalized payload, source identity, contract-validation report, and ingestion metadata.
+    required_examples:
+      - examples/acr/source-record.example.json
+
+  ConcordanceLink:
+    path: schemas/acr/concordance-link.schema.json
+    owner: SocioProphet/regis-entity-graph
+    description: Crosswalk edge from a source record to a canonical entity with status, score, policy, and resolver provenance.
+    required_examples:
+      - examples/acr/concordance-link.example.json
+
+  EvidenceClaim:
+    path: schemas/acr/evidence-claim.schema.json
+    owner: SocioProphet/regis-entity-graph
+    description: Typed assertion extracted from a source record, document, event, credential, ontology graph, or human stewardship action.
+    required_examples:
+      - examples/acr/evidence-claim.example.json
+
+  DecisionLedgerEntry:
+    path: schemas/acr/decision-ledger-entry.schema.json
+    owner: SocioProphet/regis-entity-graph
+    description: Append-only explanation for match, non-match, merge, split, promotion, rejection, override, or stewardship decisions.
+    required_examples:
+      - examples/acr/decision-ledger-entry.example.json
+
+  EnergyLedgerEntry:
+    path: schemas/acr/energy-ledger-entry.schema.json
+    owner: SocioProphet/regis-entity-graph
+    description: Resolver-energy accounting object containing candidate scores, margin, stability checks, thresholds, and promotion decision.
+    required_examples:
+      - examples/acr/energy-ledger-entry.example.json
+
+  PromotionPolicy:
+    path: schemas/acr/promotion-policy.schema.json
+    owner: SocioProphet/regis-entity-graph
+    description: Versioned gate policy for review, evidence insertion, concordance activation, canonical projection, merge, split, and rejection.
+    required_examples:
+      - examples/acr/promotion-policy.example.json
+
+  RelationshipFormationHook:
+    path: schemas/acr/relationship-formation-hook.schema.json
+    owner: SocioProphet/regis-entity-graph
+    description: Bridge object linking ACR relationship formation to Ontogenesis genesis events, validity intervals, and derivation paths.
+    required_examples:
+      - examples/acr/relationship-formation-hook.example.json
+
+invariants:
+  - id: canonical_transition_requires_decision_ledger
+    statement: Canonical updates, merges, splits, and promotions require a DecisionLedgerEntry.
+  - id: source_records_are_preserved
+    statement: SourceRecord raw payloads must remain preserved even when normalized projections change.
+  - id: evidence_does_not_overwrite_truth
+    statement: EvidenceClaim objects do not overwrite canonical state without promotion policy and ledgered decision.
+  - id: low_margin_blocks_promotion
+    statement: Low-margin or unstable EnergyLedgerEntry outputs must not be promoted to canonical state automatically.
+  - id: identity_prime_scope_protection
+    statement: ACR must not silently merge protected prime identity scopes into unsafe aggregate profiles.
+  - id: ontogenesis_binding_for_relationships
+    statement: Relationship formation must be able to bind to Ontogenesis validity and derivation semantics.
