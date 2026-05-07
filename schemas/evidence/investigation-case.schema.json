@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.socioprophet.org/regis/evidence/investigation-case.schema.json",
+  "title": "InvestigationCase",
+  "type": "object",
+  "required": ["case_id", "schema_version", "policy_version", "case_model_version", "case_type", "status", "findings"],
+  "properties": {
+    "case_id": {"type": "string"},
+    "schema_version": {"type": "string"},
+    "policy_version": {"type": "string"},
+    "case_model_version": {"type": "string"},
+    "case_type": {"type": "string"},
+    "status": {"type": "string", "enum": ["OPEN", "CLOSED", "PENDING_REVIEW", "SUPERSEDED"]},
+    "findings": {"type": "array", "items": {"$ref": "https://schemas.socioprophet.org/regis/evidence/evidence-finding.schema.json"}, "minItems": 1},
+    "trace_pointers": {"type": "array", "items": {"type": "string"}, "default": []},
+    "ledger_pointers": {"type": "array", "items": {"type": "string"}, "default": []},
+    "certificate_refs": {"type": "array", "items": {"type": "string"}, "default": []},
+    "canonical_mutation": {"type": "boolean", "default": false}
+  },
+  "additionalProperties": false
+}
