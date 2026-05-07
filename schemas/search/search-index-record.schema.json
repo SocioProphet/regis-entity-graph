@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.socioprophet.org/regis/search/search-index-record.schema.json",
+  "title": "SearchIndexRecord",
+  "type": "object",
+  "required": ["search_index_record_id", "schema_version", "policy_version", "index_version", "record_type", "indexed_artifacts", "claims_canonical_truth"],
+  "properties": {
+    "search_index_record_id": {"type": "string"},
+    "schema_version": {"type": "string"},
+    "policy_version": {"type": "string"},
+    "index_version": {"type": "string"},
+    "record_type": {"type": "string"},
+    "indexed_artifacts": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+    "search_record_pointer": {"type": "string"},
+    "ledger_pointers": {"type": "array", "items": {"type": "string"}, "default": []},
+    "certificate_refs": {"type": "array", "items": {"type": "string"}, "default": []},
+    "claims_canonical_truth": {"type": "boolean", "const": false},
+    "canonical_mutation": {"type": "boolean", "default": false}
+  },
+  "additionalProperties": false
+}
