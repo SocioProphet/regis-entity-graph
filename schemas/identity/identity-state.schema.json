@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.socioprophet.org/regis/identity/identity-state.schema.json",
+  "title": "IdentityState",
+  "type": "object",
+  "required": ["identity_state_id", "schema_version", "policy_version", "entity_ref", "primes", "scopes", "status"],
+  "properties": {
+    "identity_state_id": {"type": "string"},
+    "schema_version": {"type": "string"},
+    "policy_version": {"type": "string"},
+    "entity_ref": {"type": "string"},
+    "worldline_event_ref": {"type": "string"},
+    "primes": {"type": "array", "items": {"type": "string"}},
+    "scopes": {"type": "array", "items": {"type": "string"}},
+    "mixture": {"type": "object", "additionalProperties": {"type": "integer", "minimum": 0, "maximum": 1}},
+    "status": {"type": "string", "enum": ["observed", "verified", "refuted", "stale", "requires_review"]},
+    "decision_ledger_refs": {"type": "array", "items": {"type": "string"}, "default": []},
+    "certificate_refs": {"type": "array", "items": {"type": "string"}, "default": []},
+    "canonical_mutation": {"type": "boolean", "default": false}
+  },
+  "additionalProperties": false
+}

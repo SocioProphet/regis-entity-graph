@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.socioprophet.org/regis/evidence/meshrush-simulation-trace.schema.json",
+  "title": "MeshRushSimulationTrace",
+  "type": "object",
+  "required": ["trace_id", "schema_version", "policy_version", "simulation_version", "graph_view_ref", "entry_nodes", "result", "trace_pointer"],
+  "properties": {
+    "trace_id": {"type": "string"},
+    "schema_version": {"type": "string"},
+    "policy_version": {"type": "string"},
+    "simulation_version": {"type": "string"},
+    "graph_view_ref": {"type": "string"},
+    "entry_nodes": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+    "visited_node_refs": {"type": "array", "items": {"type": "string"}, "default": []},
+    "blocked_edges": {"type": "array", "items": {"type": "string"}, "default": []},
+    "stop_conditions": {"type": "array", "items": {"type": "string"}, "default": []},
+    "reason_codes": {"type": "array", "items": {"type": "string"}, "default": []},
+    "result": {"type": "string", "enum": ["VERIFIED", "REFUTED", "UNDECIDABLE", "STALE", "REQUIRES_REVIEW"]},
+    "trace_pointer": {"type": "string"},
+    "certificate_refs": {"type": "array", "items": {"type": "string"}, "default": []},
+    "ledger_pointers": {"type": "array", "items": {"type": "string"}, "default": []},
+    "canonical_mutation": {"type": "boolean", "default": false}
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.socioprophet.org/regis/evidence/evidence-finding.schema.json",
+  "title": "EvidenceFinding",
+  "type": "object",
+  "required": ["finding_id", "schema_version", "policy_version", "finding_type", "summary", "regis_graph_pointers", "ledger_pointers", "certificate_pointers"],
+  "properties": {
+    "finding_id": {"type": "string"},
+    "schema_version": {"type": "string"},
+    "policy_version": {"type": "string"},
+    "finding_type": {"type": "string"},
+    "summary": {"type": "string"},
+    "severity": {"type": "string", "enum": ["LOW", "MEDIUM", "HIGH", "CRITICAL", "INFO"]},
+    "reason_codes": {"type": "array", "items": {"type": "string"}, "default": []},
+    "regis_graph_pointers": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+    "ledger_pointers": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+    "certificate_pointers": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+    "trace_pointers": {"type": "array", "items": {"type": "string"}, "default": []},
+    "source_pointers": {"type": "array", "items": {"type": "string"}, "default": []},
+    "canonical_mutation": {"type": "boolean", "default": false}
+  },
+  "additionalProperties": false
+}
