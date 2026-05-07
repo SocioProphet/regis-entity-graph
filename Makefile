@@ -1,6 +1,6 @@
-.PHONY: validate validate-acr-contracts
+.PHONY: validate validate-graph-contracts
 
-validate: validate-acr-contracts
+validate: validate-graph-contracts
 
-validate-acr-contracts:
-	python3 tools/validate_acr_contracts.py
+validate-graph-contracts:
+	python3 tools/validate_regis_graph_contracts.py

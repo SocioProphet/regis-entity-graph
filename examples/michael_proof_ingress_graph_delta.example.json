@@ -1,0 +1,223 @@
+{
+  "delta_id": "delta:michael-proof-ingress:0001",
+  "schema_version": "0.1.0",
+  "emitted_at": "2026-01-01T09:05:01Z",
+  "source_repo": "SocioProphet/identity-is-prime-reference",
+  "source_run_id": "run:michael-identity-prime-demo:0001",
+  "trace_hash": "sha256:example-trace-hash",
+  "analysis_artifact_ids": [
+    "proof:identity_is_prime_demo:001"
+  ],
+  "operations": [
+    {
+      "kind": "UPSERT_NODE",
+      "node": {
+        "node_id": "subject:pseudo:michael_local_001",
+        "kind": "PSEUDONYM",
+        "labels": [
+          "LOCAL_SUBJECT_PRESENTATION"
+        ],
+        "prime_support": [
+          "FOUNDER",
+          "PATIENT",
+          "PARENT"
+        ],
+        "scope_tags": [
+          "CITIZEN_FOG"
+        ],
+        "status": "ACTIVE",
+        "valid_time": {
+          "from": "2026-01-01T09:00:00Z",
+          "to": null
+        },
+        "system_time": {
+          "from_version": 1,
+          "to_version": null
+        },
+        "attrs": {
+          "source_contract": "IdentitySubjectContext.v0.1",
+          "subject_id": "pseudo:michael_local_001",
+          "tenant_id": "tenant:local-demo"
+        },
+        "provenance": {
+          "source_event_ids": [
+            "evt:hsm_nonce_stream_init",
+            "evt:health_portal_login"
+          ],
+          "artifact_ids": [
+            "proof:identity_is_prime_demo:001"
+          ],
+          "witness_ids": [],
+          "delta_ids": [
+            "delta:michael-proof-ingress:0001"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "UPSERT_NODE",
+      "node": {
+        "node_id": "proof-ingress:identity_is_prime_demo:001",
+        "kind": "PROOF_INGRESS_RECORD",
+        "labels": [
+          "PLATFORM_IDENTITY_INGRESS"
+        ],
+        "prime_support": [],
+        "scope_tags": [
+          "CITIZEN_FOG",
+          "ADTECH"
+        ],
+        "status": "ACTIVE",
+        "valid_time": {
+          "from": "2026-01-01T09:05:01Z",
+          "to": null
+        },
+        "system_time": {
+          "from_version": 1,
+          "to_version": null
+        },
+        "attrs": {
+          "source_contract": "IdentityProofIngressRecord.v0.1",
+          "proof_record_id": "proof:identity_is_prime_demo:001",
+          "result": "rejected",
+          "correlation_id": "claim:identity_is_prime_demo:001"
+        },
+        "provenance": {
+          "source_event_ids": [
+            "evt:third_party_pixel_fire"
+          ],
+          "artifact_ids": [
+            "proof:identity_is_prime_demo:001"
+          ],
+          "witness_ids": [],
+          "delta_ids": [
+            "delta:michael-proof-ingress:0001"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "UPSERT_NODE",
+      "node": {
+        "node_id": "proof:identity_is_prime_demo:001",
+        "kind": "PROOF_ARTIFACT",
+        "labels": [
+          "IDENTITY_IS_PRIME_DEEP_PROOF"
+        ],
+        "prime_support": [
+          "PATIENT",
+          "PARENT",
+          "ADS"
+        ],
+        "scope_tags": [
+          "CITIZEN_FOG",
+          "ADTECH"
+        ],
+        "status": "ACTIVE",
+        "valid_time": {
+          "from": "2026-01-01T09:05:01Z",
+          "to": null
+        },
+        "system_time": {
+          "from_version": 1,
+          "to_version": null
+        },
+        "attrs": {
+          "artifact_class": "EXPORT_BLOCK",
+          "result_status": "VIOLATION",
+          "reason": "Forbidden patient/parent exposure into ad-tech plus nonce-lane leakage."
+        },
+        "provenance": {
+          "source_event_ids": [
+            "evt:third_party_pixel_fire",
+            "evt:sso_token_replay_attempt"
+          ],
+          "artifact_ids": [],
+          "witness_ids": [],
+          "delta_ids": [
+            "delta:michael-proof-ingress:0001"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "UPSERT_EDGE",
+      "edge": {
+        "edge_id": "edge:subject:michael->proof-ingress:identity_is_prime_demo:001",
+        "kind": "HAS_PROOF_INGRESS",
+        "src": "subject:pseudo:michael_local_001",
+        "dst": "proof-ingress:identity_is_prime_demo:001",
+        "status": "ACTIVE",
+        "confidence": 1.0,
+        "reason": "platform-proof-ingress-adapter-output",
+        "artifact_refs": [
+          "proof:identity_is_prime_demo:001"
+        ],
+        "attrs": {},
+        "valid_time": {
+          "from": "2026-01-01T09:05:01Z",
+          "to": null
+        },
+        "system_time": {
+          "from_version": 1,
+          "to_version": null
+        },
+        "provenance": {
+          "source_event_ids": [
+            "evt:third_party_pixel_fire"
+          ],
+          "artifact_ids": [
+            "proof:identity_is_prime_demo:001"
+          ],
+          "witness_ids": [],
+          "delta_ids": [
+            "delta:michael-proof-ingress:0001"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "UPSERT_EDGE",
+      "edge": {
+        "edge_id": "edge:proof-ingress:identity_is_prime_demo:001->proof:identity_is_prime_demo:001",
+        "kind": "ATTESTED_BY_PROOF",
+        "src": "proof-ingress:identity_is_prime_demo:001",
+        "dst": "proof:identity_is_prime_demo:001",
+        "status": "ACTIVE",
+        "confidence": 1.0,
+        "reason": "deep-proof-artifact-supports-platform-ingress-record",
+        "artifact_refs": [
+          "proof:identity_is_prime_demo:001"
+        ],
+        "attrs": {},
+        "valid_time": {
+          "from": "2026-01-01T09:05:01Z",
+          "to": null
+        },
+        "system_time": {
+          "from_version": 1,
+          "to_version": null
+        },
+        "provenance": {
+          "source_event_ids": [
+            "evt:third_party_pixel_fire"
+          ],
+          "artifact_ids": [
+            "proof:identity_is_prime_demo:001"
+          ],
+          "witness_ids": [],
+          "delta_ids": [
+            "delta:michael-proof-ingress:0001"
+          ]
+        }
+      }
+    },
+    {
+      "kind": "VETO_EDGE",
+      "target_edge_id": "edge:export:third_party_pixel_fire->scope:ADTECH",
+      "reason_code": "FORBIDDEN_PRIME_SCOPE_EXPORT",
+      "reason_detail": "PATIENT/PARENT support must not be exported into ADTECH scope.",
+      "artifact_id": "proof:identity_is_prime_demo:001"
+    }
+  ]
+}
