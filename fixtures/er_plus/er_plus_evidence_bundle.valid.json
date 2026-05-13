@@ -1,0 +1,116 @@
+{
+  "schema_version": "regis.er_plus.evidence_bundle.v0.1",
+  "policy_version": "identity-prime.policy.v0.1",
+  "resolver_version": "identity-prime.er-plus.v0.1",
+  "bundle_id": "er-plus-regis-fixture-001",
+  "records": [
+    {"record_id": "src:record:mike-001", "record_type": "SourceRecord"},
+    {"record_id": "src:record:michael-001", "record_type": "SourceRecord"}
+  ],
+  "entities": [
+    {"entity_id": "regis:entity:e1", "entity_type": "CanonicalEntity", "record_ids": ["src:record:mike-001"]},
+    {"entity_id": "regis:entity:e2", "entity_type": "CanonicalEntity", "record_ids": ["src:record:mike-001", "src:record:michael-001"]}
+  ],
+  "certificates": {
+    "record_paths": [
+      {
+        "certificate_id": "cert:record-path:001",
+        "artifact_type": "RecordPathCertificate",
+        "metric_claim": "path_cost",
+        "source_record_id": "src:record:mike-001",
+        "target_record_id": "src:record:michael-001",
+        "reachable": true,
+        "cost": 0.7,
+        "steps": [{"generator_id": "name.nickname.en", "attribute": "name", "cost": 0.7}],
+        "pins": {
+          "schema_version": "regis.er_plus.evidence_bundle.v0.1",
+          "policy_version": "identity-prime.policy.v0.1",
+          "resolver_version": "identity-prime.er-plus.v0.1",
+          "input_hash": "sha256:input0001",
+          "result_hash": "sha256:result0001"
+        }
+      }
+    ],
+    "entity_paths": [
+      {
+        "certificate_id": "cert:entity-path:001",
+        "artifact_type": "EntityMovePathCertificate",
+        "metric_claim": "path_cost",
+        "source_entity_id": "regis:entity:e1",
+        "target_entity_id": "regis:entity:e2",
+        "reachable": true,
+        "cost": 1.0,
+        "steps": [{"move_type": "add_record", "record_id": "src:record:michael-001", "cost": 1.0}],
+        "pins": {
+          "schema_version": "regis.er_plus.evidence_bundle.v0.1",
+          "policy_version": "identity-prime.policy.v0.1",
+          "resolver_version": "identity-prime.er-plus.v0.1",
+          "input_hash": "sha256:input0001",
+          "result_hash": "sha256:result0001"
+        }
+      }
+    ],
+    "behavioral_evidence": [
+      {
+        "evidence_id": "evidence:behavior:001",
+        "artifact_type": "BehavioralSimilarityEvidence",
+        "entity_id": "regis:entity:e2",
+        "takens_claim": "inspired_feature_only",
+        "similarity_score": 0.91,
+        "pins": {
+          "schema_version": "regis.er_plus.evidence_bundle.v0.1",
+          "policy_version": "identity-prime.policy.v0.1",
+          "resolver_version": "identity-prime.er-plus.v0.1",
+          "input_hash": "sha256:input0001",
+          "result_hash": "sha256:result0001"
+        }
+      }
+    ],
+    "local_expansion": [
+      {
+        "observation_id": "obs:expansion:001",
+        "artifact_type": "LocalExpansionObservation",
+        "entity_id": "regis:entity:e2",
+        "diagnostic_kind": "finite_graph_expansion",
+        "r1": 1.0,
+        "r2": 2.0,
+        "delta": 1.25,
+        "pins": {
+          "schema_version": "regis.er_plus.evidence_bundle.v0.1",
+          "policy_version": "identity-prime.policy.v0.1",
+          "resolver_version": "identity-prime.er-plus.v0.1",
+          "input_hash": "sha256:input0001",
+          "result_hash": "sha256:result0001"
+        }
+      }
+    ],
+    "neutrality_replays": [
+      {
+        "replay_id": "replay:neutrality:001",
+        "artifact_type": "NeutralityReplayRun",
+        "result": "VERIFIED",
+        "distance": 0.0,
+        "tolerance": 0.0,
+        "canonical_state_hash": "sha256:state0001",
+        "reordered_state_hash": "sha256:state0001",
+        "pins": {
+          "schema_version": "regis.er_plus.evidence_bundle.v0.1",
+          "policy_version": "identity-prime.policy.v0.1",
+          "resolver_version": "identity-prime.er-plus.v0.1",
+          "input_hash": "sha256:input0001",
+          "result_hash": "sha256:result0001"
+        }
+      }
+    ]
+  },
+  "decision_ledger": [
+    {
+      "ledger_id": "ledger:er-plus:001",
+      "artifact_type": "ERPlusDecisionLedgerEntry",
+      "decision": "MERGE_VERIFIED",
+      "entity_ids": ["regis:entity:e1", "regis:entity:e2"],
+      "certificate_ids": ["cert:record-path:001", "cert:entity-path:001", "replay:neutrality:001"],
+      "claims_canonical_truth": true
+    }
+  ]
+}
