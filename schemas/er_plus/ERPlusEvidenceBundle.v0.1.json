@@ -1,0 +1,153 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.socioprophet.ai/regis/er_plus/ERPlusEvidenceBundle.v0.1.json",
+  "title": "Regis ER+ Evidence Bundle v0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "policy_version", "resolver_version", "bundle_id", "records", "entities", "certificates", "decision_ledger"],
+  "properties": {
+    "schema_version": {"const": "regis.er_plus.evidence_bundle.v0.1"},
+    "policy_version": {"type": "string", "minLength": 1},
+    "resolver_version": {"type": "string", "minLength": 1},
+    "bundle_id": {"type": "string", "minLength": 1},
+    "records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": true,
+        "required": ["record_id", "record_type"],
+        "properties": {"record_id": {"type": "string", "minLength": 1}, "record_type": {"const": "SourceRecord"}}
+      }
+    },
+    "entities": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": true,
+        "required": ["entity_id", "entity_type", "record_ids"],
+        "properties": {
+          "entity_id": {"type": "string", "minLength": 1},
+          "entity_type": {"const": "CanonicalEntity"},
+          "record_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true}
+        }
+      }
+    },
+    "certificates": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["record_paths", "entity_paths", "behavioral_evidence", "local_expansion", "neutrality_replays"],
+      "properties": {
+        "record_paths": {"type": "array", "items": {"$ref": "#/$defs/record_path_certificate"}},
+        "entity_paths": {"type": "array", "items": {"$ref": "#/$defs/entity_move_path_certificate"}},
+        "behavioral_evidence": {"type": "array", "items": {"$ref": "#/$defs/behavioral_evidence"}},
+        "local_expansion": {"type": "array", "items": {"$ref": "#/$defs/local_expansion"}},
+        "neutrality_replays": {"type": "array", "items": {"$ref": "#/$defs/neutrality_replay"}}
+      }
+    },
+    "decision_ledger": {"type": "array", "items": {"$ref": "#/$defs/decision_ledger_entry"}}
+  },
+  "$defs": {
+    "hash": {"type": "string", "minLength": 8},
+    "pins": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "policy_version", "resolver_version", "input_hash", "result_hash"],
+      "properties": {
+        "schema_version": {"type": "string", "minLength": 1},
+        "policy_version": {"type": "string", "minLength": 1},
+        "resolver_version": {"type": "string", "minLength": 1},
+        "input_hash": {"$ref": "#/$defs/hash"},
+        "result_hash": {"$ref": "#/$defs/hash"}
+      }
+    },
+    "metric_claim": {"enum": ["path_cost", "quasi_metric", "metric_under_symmetric_inverse_assumptions"]},
+    "record_path_certificate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["certificate_id", "artifact_type", "metric_claim", "source_record_id", "target_record_id", "reachable", "cost", "pins"],
+      "properties": {
+        "certificate_id": {"type": "string", "minLength": 1},
+        "artifact_type": {"const": "RecordPathCertificate"},
+        "metric_claim": {"$ref": "#/$defs/metric_claim"},
+        "source_record_id": {"type": "string"},
+        "target_record_id": {"type": "string"},
+        "reachable": {"type": "boolean"},
+        "cost": {"type": "number", "minimum": 0},
+        "steps": {"type": "array"},
+        "pins": {"$ref": "#/$defs/pins"}
+      }
+    },
+    "entity_move_path_certificate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["certificate_id", "artifact_type", "metric_claim", "source_entity_id", "target_entity_id", "reachable", "cost", "pins"],
+      "properties": {
+        "certificate_id": {"type": "string"},
+        "artifact_type": {"const": "EntityMovePathCertificate"},
+        "metric_claim": {"$ref": "#/$defs/metric_claim"},
+        "source_entity_id": {"type": "string"},
+        "target_entity_id": {"type": "string"},
+        "reachable": {"type": "boolean"},
+        "cost": {"type": "number", "minimum": 0},
+        "steps": {"type": "array"},
+        "pins": {"$ref": "#/$defs/pins"}
+      }
+    },
+    "behavioral_evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["evidence_id", "artifact_type", "entity_id", "takens_claim", "similarity_score", "pins"],
+      "properties": {
+        "evidence_id": {"type": "string"},
+        "artifact_type": {"enum": ["BehavioralTrajectoryEvidence", "BehavioralSimilarityEvidence"]},
+        "entity_id": {"type": "string"},
+        "takens_claim": {"enum": ["inspired_feature_only", "formal_embedding_claim_requires_separate_assumptions"]},
+        "similarity_score": {"type": "number", "minimum": 0, "maximum": 1},
+        "pins": {"$ref": "#/$defs/pins"}
+      }
+    },
+    "local_expansion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["observation_id", "artifact_type", "entity_id", "diagnostic_kind", "r1", "r2", "delta", "pins"],
+      "properties": {
+        "observation_id": {"type": "string"},
+        "artifact_type": {"const": "LocalExpansionObservation"},
+        "entity_id": {"type": "string"},
+        "diagnostic_kind": {"const": "finite_graph_expansion"},
+        "r1": {"type": "number", "exclusiveMinimum": 0},
+        "r2": {"type": "number", "exclusiveMinimum": 0},
+        "delta": {"type": "number"},
+        "pins": {"$ref": "#/$defs/pins"}
+      }
+    },
+    "neutrality_replay": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["replay_id", "artifact_type", "result", "distance", "tolerance", "canonical_state_hash", "reordered_state_hash", "pins"],
+      "properties": {
+        "replay_id": {"type": "string"},
+        "artifact_type": {"const": "NeutralityReplayRun"},
+        "result": {"enum": ["VERIFIED", "REFUTED"]},
+        "distance": {"type": "number", "minimum": 0},
+        "tolerance": {"type": "number", "minimum": 0},
+        "canonical_state_hash": {"$ref": "#/$defs/hash"},
+        "reordered_state_hash": {"$ref": "#/$defs/hash"},
+        "pins": {"$ref": "#/$defs/pins"}
+      }
+    },
+    "decision_ledger_entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ledger_id", "artifact_type", "decision", "entity_ids", "certificate_ids", "claims_canonical_truth"],
+      "properties": {
+        "ledger_id": {"type": "string"},
+        "artifact_type": {"const": "ERPlusDecisionLedgerEntry"},
+        "decision": {"enum": ["MERGE_VERIFIED", "MERGE_BLOCKED", "RELATED_ONLY", "REQUIRES_REVIEW"]},
+        "entity_ids": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+        "certificate_ids": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+        "claims_canonical_truth": {"type": "boolean"}
+      }
+    }
+  }
+}
