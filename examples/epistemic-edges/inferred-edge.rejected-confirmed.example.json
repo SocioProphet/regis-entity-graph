@@ -1,0 +1,45 @@
+{
+  "apiVersion": "regis.entity-graph.epistemic-edge/v1",
+  "kind": "EpistemicEdgeRecord",
+  "recordId": "urn:regis:epistemic-edge:bad-inferred-confirmed",
+  "createdAt": "2026-05-29T16:11:00Z",
+  "edgeRef": "edge:model-summary->company:confirmed-obligation",
+  "edgeKind": "DERIVED_RELATIONSHIP",
+  "edgeStatus": "ACTIVE",
+  "epistemicClass": "inferred_relation",
+  "sourceChannel": {
+    "channelRef": "rcg:channel:model.summary",
+    "channelClass": "model_output",
+    "substrate": "text summary",
+    "captureMethod": "summarization",
+    "trustBoundary": "same_workspace",
+    "knownConfusabilityModes": ["summary omission", "model hallucination", "source coverage gap"]
+  },
+  "perceptRefs": ["summary:unverified-loan-summary"],
+  "interpretantRefs": ["interpretant:confirmed-company-obligation"],
+  "evidenceRefs": ["summary:unverified-loan-summary"],
+  "policyDecisionRefs": ["procybernetica:reciprocal-channel-governance:v0.1"],
+  "confidence": {
+    "confidenceType": "model_heuristic",
+    "level": "medium",
+    "score": 0.61
+  },
+  "promotionState": "confirmed",
+  "temporalScope": {
+    "validFrom": "2026-05-29T16:11:00Z",
+    "validTo": null,
+    "revalidationRef": null
+  },
+  "consumers": {
+    "allowed": ["search", "traversal", "legal_or_contract", "policy", "agent_action"],
+    "disallowed": []
+  },
+  "review": {
+    "required": true,
+    "status": "pending",
+    "reviewerRefs": ["human:operator"],
+    "approvalRef": null,
+    "repairEventRefs": []
+  },
+  "nonClaims": []
+}
