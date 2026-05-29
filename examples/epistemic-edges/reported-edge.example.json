@@ -1,0 +1,48 @@
+{
+  "apiVersion": "regis.entity-graph.epistemic-edge/v1",
+  "kind": "EpistemicEdgeRecord",
+  "recordId": "urn:regis:epistemic-edge:reported-keith-loan-planning",
+  "createdAt": "2026-05-29T16:10:00Z",
+  "edgeRef": "edge:keith->company:potential-loan",
+  "edgeKind": "DISCLOSED_RELATIONSHIP",
+  "edgeStatus": "PROPOSED",
+  "epistemicClass": "reported_relation",
+  "sourceChannel": {
+    "channelRef": "rcg:channel:conversation.typed-or-transcribed",
+    "channelClass": "human_communication",
+    "substrate": "conversation text",
+    "captureMethod": "operator report",
+    "trustBoundary": "external_authenticated",
+    "knownConfusabilityModes": ["speech-act ambiguity", "planning-not-fact", "temporal drift"]
+  },
+  "perceptRefs": ["conversation:llc-formation-keith-loan-discussion"],
+  "interpretantRefs": ["interpretant:potential-loan-planning"],
+  "evidenceRefs": ["conversation:llc-formation-keith-loan-discussion"],
+  "policyDecisionRefs": ["procybernetica:reciprocal-channel-governance:v0.1"],
+  "confidence": {
+    "confidenceType": "human_reported",
+    "level": "medium",
+    "score": 0.72
+  },
+  "promotionState": "candidate",
+  "temporalScope": {
+    "validFrom": "2026-05-29T16:10:00Z",
+    "validTo": null,
+    "revalidationRef": "requires-document-before-legal-or-accounting-use"
+  },
+  "consumers": {
+    "allowed": ["search", "traversal", "dashboard"],
+    "disallowed": ["entity_merge", "export", "policy", "memory_promotion", "agent_action", "legal_or_contract", "publication"]
+  },
+  "review": {
+    "required": true,
+    "status": "pending",
+    "reviewerRefs": ["human:operator"],
+    "approvalRef": null,
+    "repairEventRefs": []
+  },
+  "nonClaims": [
+    "This is not a legal fact, accounting fact, executed loan, or durable contractual relationship.",
+    "Do not promote beyond candidate status without a signed artifact or explicit confirmation."
+  ]
+}
