@@ -110,3 +110,28 @@ The repo you can download includes a runnable toy:
   python -m venv .venv && source .venv/bin/activate
   pip install -r requirements.txt
   python -m prime_er.cli --events examples/michael_fog_events.json --out /tmp/artifact.json
+  ```
+
+---
+
+## 5) Epistemic edge typing
+
+Regis now carries a companion epistemic-edge contract for graph edges that originate from channel-conditioned percepts, extractions, summaries, reports, or inference.
+
+This lane does not replace `schemas/edge.schema.json`. The base edge schema remains the graph edge contract for identity, endpoints, kind, status, time, and provenance. The companion `EpistemicEdgeRecord` explains what kind of knowledge the edge represents and what consumers may use it.
+
+The doctrine, contract, examples, and validator live at:
+
+- `docs/epistemic-edge-typing.md`
+- `schemas/epistemic-edge-record.schema.json`
+- `examples/epistemic-edges/reported-edge.example.json`
+- `examples/epistemic-edges/inferred-edge.rejected-confirmed.example.json`
+- `tools/validate_epistemic_edge_records.py`
+
+Validate locally:
+
+```bash
+make validate-epistemic-edge-records
+```
+
+The reported relation example is expected to pass as a candidate edge with restricted consumers. The inferred/model-summary relation example is expected to fail semantically because it attempts to become active/confirmed and allows high-risk consumers without approval, artifact-grade evidence, or repair.
