@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://socioprophet.org/schemas/regis/ioes_graph_extension.schema.json",
+  "title": "Regis IOES Graph Extension",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["ioes_version", "record_kind", "record_id", "entity_ref", "status", "evidence_refs", "policy_refs", "valid_time", "provenance"],
+  "properties": {
+    "ioes_version": {"const": "0.1"},
+    "record_kind": {"enum": ["StewardshipEdge", "KeeperLog", "SuccessionRule", "OntogenesisState", "GaiaDependencyRecord", "AbandonmentSignal"]},
+    "record_id": {"type": "string", "minLength": 1},
+    "entity_ref": {"type": "string", "minLength": 1},
+    "status": {"enum": ["candidate", "active", "needs_review", "contested", "handoff_pending", "orphaned", "retired", "archived", "revoked", "expired"]},
+    "scope": {"type": "string"},
+    "steward_ref": {"type": "string"},
+    "keeper_ref": {"type": "string"},
+    "successor_refs": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true, "default": []},
+    "phase": {"enum": ["seed", "formation", "growth", "maturity", "transmission", "transformation", "decline", "succession", "archive", "termination"]},
+    "dependency_type": {"enum": ["community", "family", "education", "energy", "water", "food", "infrastructure", "software", "compute", "language", "standards", "evidence_source", "jurisdiction", "ecosystem"]},
+    "criticality": {"enum": ["low", "medium", "high", "critical"]},
+    "review_interval_days": {"type": "integer", "minimum": 1},
+    "last_reviewed_at": {"type": "string", "format": "date-time"},
+    "authority_refs": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true, "default": []},
+    "consent_refs": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true, "default": []},
+    "evidence_refs": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true, "minItems": 1},
+    "policy_refs": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true, "minItems": 1},
+    "keeper_log_refs": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true, "default": []},
+    "succession_rule_refs": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true, "default": []},
+    "valid_time": {"type": "object", "additionalProperties": false, "required": ["from", "to"], "properties": {"from": {"type": "string", "format": "date-time"}, "to": {"anyOf": [{"type": "string", "format": "date-time"}, {"type": "null"}]}}},
+    "provenance": {"type": "object", "additionalProperties": false, "required": ["source_event_ids", "artifact_ids"], "properties": {"source_event_ids": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true}, "artifact_ids": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true}, "witness_ids": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true, "default": []}}},
+    "non_claims": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true, "default": []}
+  }
+}
