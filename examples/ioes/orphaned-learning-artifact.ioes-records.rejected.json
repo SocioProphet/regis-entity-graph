@@ -1,0 +1,40 @@
+{
+  "fixture_id": "ioes_orphaned_learning_artifact_rejected_001",
+  "schema_version": "0.1",
+  "description": "Rejected IOES graph extension records: active stewardship is claimed without keeper log or succession posture.",
+  "records": [
+    {
+      "ioes_version": "0.1",
+      "record_kind": "StewardshipEdge",
+      "record_id": "stewardship_edge_orphaned_artifact_001",
+      "entity_ref": "learning_artifact:sla_lesson_unkept_001",
+      "status": "active",
+      "scope": "claimed stewardship without sufficient continuity records",
+      "steward_ref": "keeper:missing_keeper",
+      "authority_refs": [],
+      "consent_refs": [],
+      "evidence_refs": ["evidence:evb_unkept_001"],
+      "policy_refs": ["policy:ioes_protected_value_stewarded_learning_artifact_preview"],
+      "keeper_log_refs": [],
+      "succession_rule_refs": [],
+      "valid_time": {"from": "2026-06-06T20:05:00Z", "to": null},
+      "provenance": {"source_event_ids": ["event:unkept_canon_request_001"], "artifact_ids": ["artifact:sla_lesson_unkept_001"], "witness_ids": []},
+      "non_claims": ["This fixture is expected to fail IOES semantic validation."]
+    },
+    {
+      "ioes_version": "0.1",
+      "record_kind": "OntogenesisState",
+      "record_id": "ontogenesis_unkept_artifact_001",
+      "entity_ref": "learning_artifact:sla_lesson_unkept_001",
+      "status": "active",
+      "phase": "maturity",
+      "review_interval_days": 30,
+      "last_reviewed_at": "2025-12-01T00:00:00Z",
+      "evidence_refs": ["evidence:evb_unkept_001"],
+      "policy_refs": ["policy:ioes_protected_value_stewarded_learning_artifact_preview"],
+      "valid_time": {"from": "2026-06-06T20:05:00Z", "to": null},
+      "provenance": {"source_event_ids": ["event:unkept_canon_request_001"], "artifact_ids": ["artifact:sla_lesson_unkept_001"], "witness_ids": []},
+      "non_claims": ["This fixture is expected to fail because maturity is claimed while review is stale and stewardship is broken."]
+    }
+  ]
+}
