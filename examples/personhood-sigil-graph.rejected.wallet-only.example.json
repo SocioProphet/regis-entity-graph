@@ -1,0 +1,39 @@
+{
+  "apiVersion": "regis.entity-graph.identity-personhood-sigil/v1",
+  "kind": "IdentityPersonhoodSigilGraphRecord",
+  "recordId": "urn:regis:identity-personhood-sigil:rejected-wallet-only",
+  "createdAt": "2026-05-04T18:40:00Z",
+  "sourceArtifacts": {
+    "personhoodBindingRef": "pbr_rejected_wallet_only",
+    "identitySigilSealRef": "iss_rejected_wallet_only",
+    "holographMeTwinRef": "hdt_example_alpha"
+  },
+  "nodes": [
+    {"nodeId": "node:pbr_rejected_wallet_only", "nodeClass": "PERSONHOOD_BINDING", "sourceRef": "pbr_rejected_wallet_only", "status": "ACTIVE"},
+    {"nodeId": "node:sub_example_alpha", "nodeClass": "IDENTITY_MESH_SUBJECT", "sourceRef": "sub_example_alpha", "status": "ACTIVE"},
+    {"nodeId": "node:iss_rejected_wallet_only", "nodeClass": "IDENTITY_SIGIL_SEAL", "sourceRef": "iss_rejected_wallet_only", "status": "ACTIVE"},
+    {"nodeId": "node:wallet_only", "nodeClass": "SIGNING_AUTHORITY", "sourceRef": "wallet:eip155:1:0x1111111111111111111111111111111111111111", "status": "ACTIVE"}
+  ],
+  "edges": [
+    {
+      "edgeId": "edge:wallet-personhood",
+      "edgeClass": "PERSON_BOUND_TO_SUBJECT",
+      "src": "node:wallet_only",
+      "dst": "node:sub_example_alpha",
+      "status": "ACTIVE",
+      "scope": "personhood_claim",
+      "evidenceRefs": ["wallet:eip155:1:0x1111111111111111111111111111111111111111"],
+      "policyRefs": ["policy://wallet/not-person-v1"],
+      "nonClaims": []
+    }
+  ],
+  "policyDecisionRefs": ["policy://wallet/not-person-v1"],
+  "transitionReceiptRefs": ["tr_initial_001"],
+  "nonClaims": [
+    "Sigil seal is presentation and authority surface, not the person.",
+    "Signing authority is scoped controller, not the person.",
+    "Reputation is contextual evidence, not global human worth.",
+    "Graph does not authorize public correlation of all identity contexts.",
+    "Portrait is not biometric proof by default."
+  ]
+}
