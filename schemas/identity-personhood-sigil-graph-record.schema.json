@@ -1,0 +1,122 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://socioprophet.org/schemas/regis/identity-personhood-sigil-graph-record.schema.json",
+  "title": "Regis Identity Personhood Sigil Graph Record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "apiVersion",
+    "kind",
+    "recordId",
+    "createdAt",
+    "sourceArtifacts",
+    "nodes",
+    "edges",
+    "policyDecisionRefs",
+    "transitionReceiptRefs",
+    "nonClaims"
+  ],
+  "properties": {
+    "apiVersion": {"const": "regis.entity-graph.identity-personhood-sigil/v1"},
+    "kind": {"const": "IdentityPersonhoodSigilGraphRecord"},
+    "recordId": {"type": "string", "pattern": "^urn:regis:identity-personhood-sigil:[a-z0-9][a-z0-9._:-]*$"},
+    "createdAt": {"type": "string", "format": "date-time"},
+    "sourceArtifacts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["personhoodBindingRef", "identitySigilSealRef"],
+      "properties": {
+        "personhoodBindingRef": {"type": "string", "pattern": "^pbr_[a-zA-Z0-9_-]+$"},
+        "identitySigilSealRef": {"type": "string", "pattern": "^iss_[a-zA-Z0-9_-]+$"},
+        "holographMeTwinRef": {"type": "string", "pattern": "^hdt_[a-zA-Z0-9_-]+$"}
+      }
+    },
+    "nodes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["nodeId", "nodeClass", "sourceRef"],
+        "properties": {
+          "nodeId": {"type": "string", "minLength": 1},
+          "nodeClass": {"$ref": "#/$defs/nodeClass"},
+          "sourceRef": {"type": "string", "minLength": 1},
+          "status": {"type": "string"}
+        }
+      }
+    },
+    "edges": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["edgeId", "edgeClass", "src", "dst", "status", "evidenceRefs", "policyRefs", "nonClaims"],
+        "properties": {
+          "edgeId": {"type": "string", "minLength": 1},
+          "edgeClass": {"$ref": "#/$defs/edgeClass"},
+          "src": {"type": "string", "minLength": 1},
+          "dst": {"type": "string", "minLength": 1},
+          "status": {"enum": ["PROPOSED", "ACTIVE", "VETOED", "REVOKED", "EXPIRED", "CONTESTED"]},
+          "scope": {"type": "string"},
+          "authorityBand": {"type": "string"},
+          "evidenceRefs": {"type": "array", "items": {"type": "string", "minLength": 1}},
+          "policyRefs": {"type": "array", "items": {"type": "string", "minLength": 1}},
+          "epistemicEdgeRef": {"type": "string"},
+          "nonClaims": {"type": "array", "items": {"type": "string"}}
+        }
+      }
+    },
+    "policyDecisionRefs": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+    "transitionReceiptRefs": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+    "nonClaims": {"type": "array", "minItems": 5, "items": {"type": "string"}}
+  },
+  "$defs": {
+    "nodeClass": {
+      "enum": [
+        "PERSONHOOD_BINDING",
+        "BINDING_CEREMONY",
+        "IDENTITY_MESH_SUBJECT",
+        "HUMAN_DIGITAL_TWIN_REF",
+        "SIGIL_ARTIFACT",
+        "IDENTITY_SIGIL_SEAL",
+        "PORTRAIT_PRESENTATION_POLICY",
+        "SIGNING_AUTHORITY",
+        "AGENT_DELEGATION_SEAL",
+        "DELEGATED_ACTION_RECEIPT",
+        "CONTEXTUAL_REPUTATION_CREDENTIAL",
+        "RECOVERY_POLICY",
+        "REVOCATION_POLICY",
+        "GUARDIAN_OR_WITNESS_ATTESTATION",
+        "LIVENESS_OR_PRESENCE_EVIDENCE",
+        "CREDENTIAL_ATTESTATION",
+        "CONSENT_RECEIPT",
+        "TRANSITION_RECEIPT",
+        "POLICY_DECISION"
+      ]
+    },
+    "edgeClass": {
+      "enum": [
+        "PERSON_BOUND_TO_SUBJECT",
+        "SUBJECT_GOVERNS_TWIN",
+        "SUPPORTED_BY_EVIDENCE_CLASS",
+        "WITNESSED_BY",
+        "RECOVERABLE_BY",
+        "REVOCABLE_BY",
+        "SUBJECT_HAS_SIGIL_SEAL",
+        "SEAL_HAS_SIGIL",
+        "SEAL_HAS_PORTRAIT_POLICY",
+        "SEAL_CONTROLLED_BY_AUTHORITY",
+        "AUTHORITY_SCOPED_TO",
+        "DELEGATES_TO_AGENT",
+        "EMITS_ACTION_RECEIPT",
+        "ATTESTS_CONTEXTUAL_REPUTATION",
+        "PROJECTED_UNDER_CONSENT",
+        "ALLOWED_BY_POLICY",
+        "DENIED_BY_POLICY",
+        "RECORDED_BY_TRANSITION_RECEIPT"
+      ]
+    }
+  }
+}
