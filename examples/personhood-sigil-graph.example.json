@@ -1,0 +1,105 @@
+{
+  "apiVersion": "regis.entity-graph.identity-personhood-sigil/v1",
+  "kind": "IdentityPersonhoodSigilGraphRecord",
+  "recordId": "urn:regis:identity-personhood-sigil:example-alpha",
+  "createdAt": "2026-05-04T18:40:00Z",
+  "sourceArtifacts": {
+    "personhoodBindingRef": "pbr_example_alpha",
+    "identitySigilSealRef": "iss_example_alpha",
+    "holographMeTwinRef": "hdt_example_alpha"
+  },
+  "nodes": [
+    {"nodeId": "node:pbr_example_alpha", "nodeClass": "PERSONHOOD_BINDING", "sourceRef": "pbr_example_alpha", "status": "ACTIVE"},
+    {"nodeId": "node:sub_example_alpha", "nodeClass": "IDENTITY_MESH_SUBJECT", "sourceRef": "sub_example_alpha", "status": "ACTIVE"},
+    {"nodeId": "node:hdt_example_alpha", "nodeClass": "HUMAN_DIGITAL_TWIN_REF", "sourceRef": "hdt_example_alpha", "status": "ACTIVE"},
+    {"nodeId": "node:iss_example_alpha", "nodeClass": "IDENTITY_SIGIL_SEAL", "sourceRef": "iss_example_alpha", "status": "ACTIVE"},
+    {"nodeId": "node:sigil_example_alpha", "nodeClass": "SIGIL_ARTIFACT", "sourceRef": "sigil_example_alpha", "status": "ACTIVE"},
+    {"nodeId": "node:portrait_policy_example_alpha", "nodeClass": "PORTRAIT_PRESENTATION_POLICY", "sourceRef": "portrait-policy://example-alpha/non-biometric", "status": "ACTIVE"},
+    {"nodeId": "node:sa_example_did", "nodeClass": "SIGNING_AUTHORITY", "sourceRef": "did:key:zExampleAlpha", "status": "ACTIVE"},
+    {"nodeId": "node:sa_example_wallet", "nodeClass": "SIGNING_AUTHORITY", "sourceRef": "wallet:eip155:1:0x0000000000000000000000000000000000000000", "status": "ACTIVE"},
+    {"nodeId": "node:guardian_attestation_001", "nodeClass": "GUARDIAN_OR_WITNESS_ATTESTATION", "sourceRef": "ev_guardian_attestation_001", "status": "ACTIVE"},
+    {"nodeId": "node:recovery_policy_example_alpha", "nodeClass": "RECOVERY_POLICY", "sourceRef": "recovery://example-alpha/policy-v1", "status": "ACTIVE"},
+    {"nodeId": "node:revocation_policy_example_alpha", "nodeClass": "REVOCATION_POLICY", "sourceRef": "revocation://example-alpha/policy-v1", "status": "ACTIVE"},
+    {"nodeId": "node:reputation_example_alpha", "nodeClass": "CONTEXTUAL_REPUTATION_CREDENTIAL", "sourceRef": "reputation://developer/example-alpha/trusted-reviewer", "status": "ACTIVE"},
+    {"nodeId": "node:tr_initial_001", "nodeClass": "TRANSITION_RECEIPT", "sourceRef": "tr_initial_001", "status": "ACTIVE"}
+  ],
+  "edges": [
+    {
+      "edgeId": "edge:pbr-to-subject",
+      "edgeClass": "PERSON_BOUND_TO_SUBJECT",
+      "src": "node:pbr_example_alpha",
+      "dst": "node:sub_example_alpha",
+      "status": "ACTIVE",
+      "scope": "identity_mesh_root",
+      "evidenceRefs": ["ev_self_attestation_001", "ev_liveness_presence_001", "ev_guardian_attestation_001"],
+      "policyRefs": ["policy://personhood/non-collapse-v1"],
+      "epistemicEdgeRef": "urn:regis:epistemic-edge:personhood-example-alpha",
+      "nonClaims": ["Personhood binding is not wallet, portrait, account, device, agent, or reputation."]
+    },
+    {
+      "edgeId": "edge:subject-governs-twin",
+      "edgeClass": "SUBJECT_GOVERNS_TWIN",
+      "src": "node:sub_example_alpha",
+      "dst": "node:hdt_example_alpha",
+      "status": "ACTIVE",
+      "scope": "agentic_work_identity",
+      "evidenceRefs": ["pbr_example_alpha"],
+      "policyRefs": ["policy://holographme/self-ownership-v1"],
+      "nonClaims": ["Twin is governed representation, not the person."]
+    },
+    {
+      "edgeId": "edge:subject-has-sigil-seal",
+      "edgeClass": "SUBJECT_HAS_SIGIL_SEAL",
+      "src": "node:sub_example_alpha",
+      "dst": "node:iss_example_alpha",
+      "status": "ACTIVE",
+      "scope": "agentic_work_identity",
+      "evidenceRefs": ["iss_example_alpha", "pbr_example_alpha"],
+      "policyRefs": ["policy://sigil-seal/personhood-binding-required-v1"],
+      "nonClaims": ["Sigil seal is presentation and authority surface, not personhood itself."]
+    },
+    {
+      "edgeId": "edge:seal-controlled-by-wallet",
+      "edgeClass": "SEAL_CONTROLLED_BY_AUTHORITY",
+      "src": "node:iss_example_alpha",
+      "dst": "node:sa_example_wallet",
+      "status": "ACTIVE",
+      "scope": "public_profile_signature; not_allowed_for=personhood_claim",
+      "evidenceRefs": ["wallet:eip155:1:0x0000000000000000000000000000000000000000"],
+      "policyRefs": ["policy://wallet/not-person-v1"],
+      "nonClaims": ["Wallet is not the person and cannot assert personhood."]
+    },
+    {
+      "edgeId": "edge:binding-recoverable-by-policy",
+      "edgeClass": "RECOVERABLE_BY",
+      "src": "node:pbr_example_alpha",
+      "dst": "node:recovery_policy_example_alpha",
+      "status": "ACTIVE",
+      "scope": "identity_mesh_root_recovery",
+      "evidenceRefs": ["recovery://example-alpha/policy-v1"],
+      "policyRefs": ["policy://personhood/recovery-required-v1"],
+      "nonClaims": ["Recovery preserves continuity; it does not erase history."]
+    },
+    {
+      "edgeId": "edge:seal-attests-contextual-reputation",
+      "edgeClass": "ATTESTS_CONTEXTUAL_REPUTATION",
+      "src": "node:iss_example_alpha",
+      "dst": "node:reputation_example_alpha",
+      "status": "ACTIVE",
+      "scope": "developer_reputation",
+      "evidenceRefs": ["reputation://developer/example-alpha/trusted-reviewer"],
+      "policyRefs": ["policy://reputation/contextual-not-global-v1"],
+      "nonClaims": ["Reputation is contextual evidence, not global human worth."]
+    }
+  ],
+  "policyDecisionRefs": ["policy://personhood/non-collapse-v1", "policy://sigil-seal/personhood-binding-required-v1"],
+  "transitionReceiptRefs": ["tr_initial_001"],
+  "nonClaims": [
+    "Personhood binding does not make any wallet the person.",
+    "Personhood binding does not make any portrait biometric proof by default.",
+    "Sigil seal is presentation and authority surface, not the person.",
+    "Signing authority is scoped controller, not the person.",
+    "Reputation is contextual evidence, not global human worth.",
+    "Graph does not authorize public correlation of all identity contexts."
+  ]
+}
