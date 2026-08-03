@@ -1,6 +1,6 @@
-.PHONY: validate validate-graph-contracts validate-epistemic-edge-records validate-ioes-graph-extension validate-ner-contracts validate-decision-ledger-seals validate-temporal-supersession validate-semantic-token-tree
+.PHONY: validate validate-graph-contracts validate-epistemic-edge-records validate-ioes-graph-extension validate-ner-contracts validate-decision-ledger-seals validate-temporal-supersession validate-semantic-token-tree validate-span-alignment
 
-validate: validate-graph-contracts validate-epistemic-edge-records validate-ioes-graph-extension validate-ner-contracts validate-decision-ledger-seals validate-temporal-supersession validate-semantic-token-tree
+validate: validate-graph-contracts validate-epistemic-edge-records validate-ioes-graph-extension validate-ner-contracts validate-decision-ledger-seals validate-temporal-supersession validate-semantic-token-tree validate-span-alignment
 
 validate-graph-contracts:
 	python3 tools/validate_regis_graph_contracts.py
@@ -22,3 +22,6 @@ validate-temporal-supersession:
 
 validate-semantic-token-tree:
 	python3 tools/validate_semantic_token_tree.py
+
+validate-span-alignment:
+	python3 tools/validate_span_alignment.py
