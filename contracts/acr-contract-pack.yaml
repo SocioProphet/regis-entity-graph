@@ -62,9 +62,22 @@ contracts:
     required_examples:
       - examples/acr/relationship-formation-hook.example.json
 
+  DecisionLedgerSeal:
+    path: schemas/acr/decision-ledger-seal.schema.json
+    owner: SocioProphet/regis-entity-graph
+    description: Additive tamper-evidence + authenticity envelope over a DecisionLedgerEntry (per-scope hash chain, seq/fork detection, ed25519/FROST signature, idempotency key). Does not modify DecisionLedgerEntry.
+    required_examples:
+      - examples/acr/decision-ledger-seal.example.json
+
 invariants:
   - id: canonical_transition_requires_decision_ledger
     statement: Canonical updates, merges, splits, and promotions require a DecisionLedgerEntry.
+  - id: decision_ledger_is_tamper_evident
+    statement: Every DecisionLedgerEntry with canonical_mutation=true MUST carry a DecisionLedgerSeal whose entry_hash commits to the entry and whose prev_seal_hash chains it within its scope.
+  - id: decision_seal_chain_is_fork_free
+    statement: Seal seq strictly increments per chain_id and no two seals may reuse a prev_seal_hash (fork detection); ordering derives from the chain, not wall-clock timestamps.
+  - id: decision_seal_is_signed
+    statement: Every DecisionLedgerSeal MUST carry a valid signature over entry_hash; high-blast-radius decisions (merge, split, canonical_promoted) SHOULD use an ed25519-frost threshold signature rather than a single key.
   - id: source_records_are_preserved
     statement: SourceRecord raw payloads must remain preserved even when normalized projections change.
   - id: evidence_does_not_overwrite_truth
