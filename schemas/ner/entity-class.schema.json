@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://socioprophet.org/schemas/regis/ner/entity-class.schema.json",
+  "title": "Regis NER Entity Class Taxonomy",
+  "description": "Canonical entity-class taxonomy for the NER (mention/span) phase of the ER/NER integration plan. Base classes are domain-neutral; domain classes encode this platform's sovereignty/consent/scope concerns. This file is the single source of truth for the enum inlined into mention.schema.json; validate_ner_contracts.py asserts the two stay in sync.",
+  "$defs": {
+    "BaseEntityClass": {
+      "type": "string",
+      "enum": [
+        "PERSON",
+        "ORG",
+        "PRODUCT_SERVICE",
+        "DEVICE",
+        "ACCOUNT",
+        "IDENTIFIER",
+        "CREDENTIAL",
+        "LOCATION",
+        "JURISDICTION",
+        "CONSENT_ARTIFACT",
+        "POLICY_TERM",
+        "PRIME_TOPIC_MENTION",
+        "ACTION_EVENT_TRIGGER",
+        "RELATIONSHIP_MENTION"
+      ]
+    },
+    "DomainEntityClass": {
+      "type": "string",
+      "enum": [
+        "SCOPE_REALM",
+        "TRACKING_IDENTIFIER",
+        "HSM_HANDLE",
+        "NONCE_STREAM",
+        "EXPORT_ATTEMPT",
+        "CONSENT_WITNESS",
+        "SENSITIVE_CONTEXT",
+        "CHILD_CONTEXT",
+        "PATIENT_CONTEXT",
+        "CIVIC_CONTEXT",
+        "MARKETING_CONTEXT"
+      ]
+    },
+    "EntityClass": {
+      "description": "Union of base and domain-specific entity classes.",
+      "type": "string",
+      "enum": [
+        "PERSON",
+        "ORG",
+        "PRODUCT_SERVICE",
+        "DEVICE",
+        "ACCOUNT",
+        "IDENTIFIER",
+        "CREDENTIAL",
+        "LOCATION",
+        "JURISDICTION",
+        "CONSENT_ARTIFACT",
+        "POLICY_TERM",
+        "PRIME_TOPIC_MENTION",
+        "ACTION_EVENT_TRIGGER",
+        "RELATIONSHIP_MENTION",
+        "SCOPE_REALM",
+        "TRACKING_IDENTIFIER",
+        "HSM_HANDLE",
+        "NONCE_STREAM",
+        "EXPORT_ATTEMPT",
+        "CONSENT_WITNESS",
+        "SENSITIVE_CONTEXT",
+        "CHILD_CONTEXT",
+        "PATIENT_CONTEXT",
+        "CIVIC_CONTEXT",
+        "MARKETING_CONTEXT"
+      ]
+    }
+  }
+}

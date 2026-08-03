@@ -1,0 +1,20 @@
+{
+  "schema_version": "regis.ner.mention_set.v0.1",
+  "source_ref": {"source_id": "net-1", "source_type": "network_event"},
+  "locality": "ADTECH",
+  "extractor_version": "regis-ner@0.1.0",
+  "mentions": [
+    {
+      "mention_id": "m1",
+      "span": {"start": 0, "end": 12, "text": "track-abc123"},
+      "entity_class": "TRACKING_IDENTIFIER",
+      "confidence": 0.95,
+      "pii": {
+        "minimized": true,
+        "hash_alg": "MD5",
+        "value_hash": "900150983cd24fb0d6963f7d28e17f72"
+      },
+      "provenance": {"source_event_ids": [], "artifact_ids": []}
+    }
+  ]
+}

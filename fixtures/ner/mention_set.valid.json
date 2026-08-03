@@ -1,0 +1,58 @@
+{
+  "schema_version": "regis.ner.mention_set.v0.1",
+  "source_ref": {
+    "source_id": "msg-2026-08-03-0007",
+    "source_type": "message",
+    "event_ir_id": "evt-ir-0007"
+  },
+  "locality": "CITIZEN_FOG",
+  "extractor_version": "regis-ner@0.1.0",
+  "overlaps_allowed": true,
+  "mentions": [
+    {
+      "mention_id": "m1",
+      "span": {"start": 0, "end": 7, "text": "Michael"},
+      "entity_class": "PERSON",
+      "prime_topic_support": ["P_ENG", "P_CIVIC"],
+      "scope_realm": "FOG",
+      "confidence": 0.98,
+      "uncertainty": 0.02,
+      "provenance": {"source_event_ids": ["evt-ir-0007"], "artifact_ids": []}
+    },
+    {
+      "mention_id": "m2",
+      "span": {"start": 13, "end": 17, "text": "Emma"},
+      "entity_class": "PERSON",
+      "secondary_classes": ["CHILD_CONTEXT"],
+      "prime_topic_support": ["P_CHILD"],
+      "scope_realm": "FOG",
+      "confidence": 0.91,
+      "pii": {
+        "minimized": true,
+        "hash_alg": "SHA-256",
+        "value_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "provenance": {"source_event_ids": ["evt-ir-0007"], "artifact_ids": []}
+    },
+    {
+      "mention_id": "m3",
+      "span": {"start": 21, "end": 34, "text": "Mercy General"},
+      "entity_class": "ORG",
+      "scope_realm": "FOG",
+      "confidence": 0.87,
+      "el_candidate_refs": ["acr-concordance-mercy-general-01"],
+      "provenance": {"source_event_ids": ["evt-ir-0007"], "artifact_ids": []}
+    },
+    {
+      "mention_id": "m4",
+      "span": {"start": 21, "end": 49, "text": "Mercy General pediatric ward"},
+      "entity_class": "PATIENT_CONTEXT",
+      "secondary_classes": ["CHILD_CONTEXT", "SENSITIVE_CONTEXT"],
+      "prime_topic_support": ["P_HEALTH", "P_CHILD"],
+      "scope_realm": "FOG",
+      "confidence": 0.82,
+      "uncertainty": 0.18,
+      "provenance": {"source_event_ids": ["evt-ir-0007"], "artifact_ids": []}
+    }
+  ]
+}
