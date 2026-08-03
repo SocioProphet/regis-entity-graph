@@ -1,14 +1,19 @@
 {
   "concordance_link_id": "concordance:src:tesco:supplier:0001:canonical:acme-cooperative-foods-ltd",
-  "source_record_id": "src:tesco:supplier:0001",
-  "candidate_entity_id": "canonical:acme-cooperative-foods-ltd",
+  "schema_version": "0.1.0",
+  "policy_version": "0.1.0",
+  "template_version": "0.1.0",
+  "resolver_version": "regis-acr-resolver@0.1.0",
+  "source_record_ref": "src:tesco:supplier:0001",
+  "canonical_entity_ref": "canonical:acme-cooperative-foods-ltd",
   "status": "pending_review",
+  "confidence": 0.86,
   "score": 0.86,
   "confidence_band": "medium",
   "resolver_run_id": "resolver-run:demo:regis-acr:0001",
   "energy_ledger_ref": "energy:demo:acme-cooperative-foods-ltd:0001",
-  "policy_id": "policy://regis-acr/default-promotion@0.1.0",
+  "reason_codes": ["name_match", "supplier_number_match"],
   "explanation_codes": ["name_match", "supplier_number_match", "proposal_only"],
-  "canonical_mutation": false,
-  "decision_ledger_refs": ["decision:src:tesco:supplier:0001:concordance-proposed"]
+  "decision_ledger_refs": ["decision:src:tesco:supplier:0001:concordance-proposed"],
+  "canonical_mutation": false
 }
