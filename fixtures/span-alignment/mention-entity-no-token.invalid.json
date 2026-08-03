@@ -1,0 +1,98 @@
+{
+  "description": "REJECT (reverse, where required): the NER layer asserts a LOCATION mention at [8,15] ('emailed' region here for the test), but the semantic tree role-typed no ENTITY_TYPE token inside that span (the only token there is an ACTION). A concrete named entity the NLU layer never typed must fail closed.",
+  "tree": {
+    "schema_version": "regis.nlu.semantic_token_tree.v0.1",
+    "utterance_ref": {
+      "utterance_id": "utt-align-0001",
+      "source_type": "message",
+      "event_ir_id": "evt-ir-align-0001"
+    },
+    "locality": "CITIZEN_FOG",
+    "parser_version": "regis-nlu@0.1.0",
+    "text": "Michael emailed Mercy General",
+    "tokens": [
+      {
+        "token_id": 0,
+        "surface": "Michael",
+        "pos": "NNP",
+        "dep": "nsubj",
+        "head": 1,
+        "span": {"start": 0, "end": 7},
+        "semantic_roles": [
+          {"label": "Person", "kind": "ENTITY_TYPE", "evidence": "dep=nsubj"}
+        ]
+      },
+      {
+        "token_id": 1,
+        "surface": "emailed",
+        "lemma": "email",
+        "pos": "VBD",
+        "dep": "ROOT",
+        "head": null,
+        "span": {"start": 8, "end": 15},
+        "semantic_roles": [
+          {"label": "ActionEmail", "kind": "ACTION", "evidence": "dep=ROOT"}
+        ]
+      },
+      {
+        "token_id": 2,
+        "surface": "Mercy",
+        "pos": "NNP",
+        "dep": "compound",
+        "head": 3,
+        "span": {"start": 16, "end": 21},
+        "semantic_roles": [
+          {"label": "Organization", "kind": "ENTITY_TYPE", "evidence": "head=General"}
+        ]
+      },
+      {
+        "token_id": 3,
+        "surface": "General",
+        "pos": "NNP",
+        "dep": "dobj",
+        "head": 1,
+        "span": {"start": 22, "end": 29},
+        "semantic_roles": [
+          {"label": "Organization", "kind": "ENTITY_TYPE", "evidence": "dep=dobj"}
+        ]
+      }
+    ]
+  },
+  "mentions": {
+    "schema_version": "regis.ner.mention_set.v0.1",
+    "source_ref": {
+      "source_id": "msg-align-0001",
+      "source_type": "message",
+      "event_ir_id": "evt-ir-align-0001"
+    },
+    "locality": "CITIZEN_FOG",
+    "extractor_version": "regis-ner@0.1.0",
+    "overlaps_allowed": true,
+    "mentions": [
+      {
+        "mention_id": "m1",
+        "span": {"start": 0, "end": 7, "text": "Michael"},
+        "entity_class": "PERSON",
+        "scope_realm": "FOG",
+        "confidence": 0.98,
+        "provenance": {"source_event_ids": ["evt-ir-align-0001"], "artifact_ids": []}
+      },
+      {
+        "mention_id": "m2",
+        "span": {"start": 16, "end": 29, "text": "Mercy General"},
+        "entity_class": "ORG",
+        "scope_realm": "FOG",
+        "confidence": 0.9,
+        "provenance": {"source_event_ids": ["evt-ir-align-0001"], "artifact_ids": []}
+      },
+      {
+        "mention_id": "m3",
+        "span": {"start": 8, "end": 15, "text": "emailed"},
+        "entity_class": "LOCATION",
+        "scope_realm": "FOG",
+        "confidence": 0.7,
+        "provenance": {"source_event_ids": ["evt-ir-align-0001"], "artifact_ids": []}
+      }
+    ]
+  }
+}
