@@ -1,0 +1,14 @@
+{
+  "schema_version": "regis.search.temporal_fact.v0.1",
+  "fact_id": "urn:regis:fact:xyz-corp:headquartered_in:berlin",
+  "entity": "urn:regis:entity:org:xyz-corp",
+  "relation": "HEADQUARTERED_IN",
+  "value": "Berlin",
+  "valid_from": "2011-03-01T00:00:00Z",
+  "valid_to": null,
+  "claims_canonical_truth": false,
+  "provenance": {
+    "source_event_ids": ["evt:filing:2011-03-01:xyz-incorporation"],
+    "artifact_ids": ["artifact:doc:xyz-incorporation-certificate"]
+  }
+}
