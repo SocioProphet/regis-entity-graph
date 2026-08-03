@@ -1,6 +1,6 @@
-.PHONY: validate validate-graph-contracts validate-epistemic-edge-records validate-ioes-graph-extension
+.PHONY: validate validate-graph-contracts validate-epistemic-edge-records validate-ioes-graph-extension validate-ner-contracts
 
-validate: validate-graph-contracts validate-epistemic-edge-records validate-ioes-graph-extension
+validate: validate-graph-contracts validate-epistemic-edge-records validate-ioes-graph-extension validate-ner-contracts
 
 validate-graph-contracts:
 	python3 tools/validate_regis_graph_contracts.py
@@ -10,3 +10,6 @@ validate-epistemic-edge-records:
 
 validate-ioes-graph-extension:
 	python3 tools/validate_ioes_graph_extension.py
+
+validate-ner-contracts:
+	python3 tools/validate_ner_contracts.py

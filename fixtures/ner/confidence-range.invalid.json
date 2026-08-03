@@ -1,0 +1,15 @@
+{
+  "schema_version": "regis.ner.mention_set.v0.1",
+  "source_ref": {"source_id": "doc-1", "source_type": "document"},
+  "locality": "CITIZEN_FOG",
+  "extractor_version": "regis-ner@0.1.0",
+  "mentions": [
+    {
+      "mention_id": "m1",
+      "span": {"start": 0, "end": 4, "text": "Acme"},
+      "entity_class": "ORG",
+      "confidence": 1.4,
+      "provenance": {"source_event_ids": [], "artifact_ids": []}
+    }
+  ]
+}

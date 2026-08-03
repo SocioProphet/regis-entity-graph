@@ -1,0 +1,222 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://socioprophet.org/schemas/regis/ner/mention.schema.json",
+  "title": "Regis NER Mention Set",
+  "description": "Output contract for the NER (mention/span detection) phase of the executable identity spine (observe -> Event-IR -> extract -> candidate -> resolve -> policy veto -> graph update -> proof). A MentionSet is the typed, provenance-bearing, scope-stamped result of extraction over a single source. Mentions are the upstream input to EL (grounding to KB entries) and ER (clustering); el_candidate_refs carries the forward link into the existing er_plus / ACR resolution contracts. Overlapping and multi-labelled spans are first-class: a phrase may be simultaneously a named entity, a prime-topic marker, and a policy-sensitive context cue.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "source_ref",
+    "locality",
+    "extractor_version",
+    "mentions"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "regis.ner.mention_set.v0.1"
+    },
+    "source_ref": {
+      "$ref": "#/$defs/SourceRef"
+    },
+    "locality": {
+      "description": "Scope/sovereignty boundary where this extraction ran. Fog and device are local-first (protective) defaults; ADTECH/INSTITUTION/HSM are bounded scopes.",
+      "type": "string",
+      "enum": [
+        "CITIZEN_FOG",
+        "CITIZEN_CLOUD",
+        "INSTITUTION",
+        "ADTECH",
+        "HSM"
+      ]
+    },
+    "extractor_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "overlaps_allowed": {
+      "description": "Explicit affirmation that this set may contain overlapping/multi-labelled spans. Always true for this contract; present so consumers cannot assume non-overlapping NER.",
+      "const": true,
+      "default": true
+    },
+    "mentions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Mention"
+      }
+    }
+  },
+  "$defs": {
+    "SourceRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_id", "source_type"],
+      "properties": {
+        "source_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_type": {
+          "type": "string",
+          "enum": ["document", "form", "log", "network_event", "message", "page"]
+        },
+        "event_ir_id": {
+          "description": "Optional link back to the Event-IR record this source was normalized into.",
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "EntityClass": {
+      "description": "Kept in sync with schemas/ner/entity-class.schema.json#/$defs/EntityClass by validate_ner_contracts.py.",
+      "type": "string",
+      "enum": [
+        "PERSON",
+        "ORG",
+        "PRODUCT_SERVICE",
+        "DEVICE",
+        "ACCOUNT",
+        "IDENTIFIER",
+        "CREDENTIAL",
+        "LOCATION",
+        "JURISDICTION",
+        "CONSENT_ARTIFACT",
+        "POLICY_TERM",
+        "PRIME_TOPIC_MENTION",
+        "ACTION_EVENT_TRIGGER",
+        "RELATIONSHIP_MENTION",
+        "SCOPE_REALM",
+        "TRACKING_IDENTIFIER",
+        "HSM_HANDLE",
+        "NONCE_STREAM",
+        "EXPORT_ATTEMPT",
+        "CONSENT_WITNESS",
+        "SENSITIVE_CONTEXT",
+        "CHILD_CONTEXT",
+        "PATIENT_CONTEXT",
+        "CIVIC_CONTEXT",
+        "MARKETING_CONTEXT"
+      ]
+    },
+    "Span": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["start", "end"],
+      "properties": {
+        "start": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "end": {
+          "description": "Exclusive end offset; must be strictly greater than start (enforced semantically by the validator).",
+          "type": "integer",
+          "minimum": 1
+        },
+        "text": {
+          "type": "string"
+        }
+      }
+    },
+    "PiiHandling": {
+      "description": "Immediate PII minimization / hashing / secret handling record. When a raw surface value is minimized, only its hash is retained. FIPS: SHA-256 is authoritative.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["minimized"],
+      "properties": {
+        "minimized": {
+          "type": "boolean"
+        },
+        "hash_alg": {
+          "const": "SHA-256"
+        },
+        "value_hash": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      }
+    },
+    "Provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_event_ids", "artifact_ids"],
+      "properties": {
+        "source_event_ids": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 1},
+          "uniqueItems": true,
+          "default": []
+        },
+        "artifact_ids": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 1},
+          "uniqueItems": true,
+          "default": []
+        }
+      }
+    },
+    "Mention": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mention_id",
+        "span",
+        "entity_class",
+        "confidence",
+        "provenance"
+      ],
+      "properties": {
+        "mention_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "span": {
+          "$ref": "#/$defs/Span"
+        },
+        "entity_class": {
+          "$ref": "#/$defs/EntityClass"
+        },
+        "secondary_classes": {
+          "description": "Additional labels for the same span (multi-label extraction). Together with overlapping spans this expresses that one phrase is simultaneously e.g. ORG + PATIENT_CONTEXT.",
+          "type": "array",
+          "items": {"$ref": "#/$defs/EntityClass"},
+          "uniqueItems": true,
+          "default": []
+        },
+        "prime_topic_support": {
+          "description": "Which prime identity topics this mention activates (irreducible roles).",
+          "type": "array",
+          "items": {"type": "string", "pattern": "^[A-Z][A-Z0-9_]*$"},
+          "uniqueItems": true,
+          "default": []
+        },
+        "scope_realm": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9_]*$"
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "uncertainty": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "pii": {
+          "$ref": "#/$defs/PiiHandling"
+        },
+        "el_candidate_refs": {
+          "description": "Forward links into the EL/ER lane (e.g. ACR concordance-link or er_plus candidate ids) that this mention grounds to.",
+          "type": "array",
+          "items": {"type": "string", "minLength": 1},
+          "uniqueItems": true,
+          "default": []
+        },
+        "provenance": {
+          "$ref": "#/$defs/Provenance"
+        }
+      }
+    }
+  }
+}
