@@ -1,0 +1,23 @@
+{
+  "policy_id": "policy://regis-acr/default-promotion@0.1.0",
+  "version": "0.1.0",
+  "status": "active",
+  "description": "Default ACR promotion policy: two-threshold review/insert gate with margin and flip-rate bounds; canonical promotion requires human review; positive-evidence-only by default.",
+  "gates": {
+    "review_threshold": 0.80,
+    "insert_threshold": 0.95,
+    "margin_threshold": 0.10,
+    "max_flip_rate": 0.20
+  },
+  "allowed_decisions": [
+    "reject",
+    "review",
+    "insert_evidence_only",
+    "promote_canonical"
+  ],
+  "canonical_promotion_requires_review": true,
+  "positive_evidence_only_default": true,
+  "forbidden_identity_prime_mixtures": [
+    ["identity-prime:natural-person", "aggregate:household-profile"]
+  ]
+}

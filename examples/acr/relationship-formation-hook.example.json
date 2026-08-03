@@ -1,0 +1,27 @@
+{
+  "relationship_formation_hook_id": "relhook:acme-cooperative-foods-ltd:subsidiary_of:acme-holdings-plc:0001",
+  "relationship_type": "subsidiary_of",
+  "subject_entity_ref": "canonical:acme-cooperative-foods-ltd",
+  "object_entity_ref": "canonical:acme-holdings-plc",
+  "status": "proposed",
+  "evidence_claim_refs": [
+    "evidence:src:tesco:supplier:0001:ownership-statement"
+  ],
+  "decision_ledger_refs": [
+    "decision:relhook:acme-cooperative-foods-ltd:relationship-proposed"
+  ],
+  "validity_interval": {
+    "valid_from": "2024-01-01T00:00:00Z",
+    "valid_to": "2026-12-31T23:59:59Z"
+  },
+  "policy_id": "policy://regis-acr/default-promotion@0.1.0",
+  "ontogenesis_bindings": {
+    "genesis_event_required": true,
+    "validity_interval_required": true,
+    "derivation_path_required": true,
+    "genesis_event_id": "genesis:acme-cooperative-foods-ltd:relationship:0001",
+    "derivation_path_id": "derivation:acme-ownership:0001",
+    "relationship_formation_record_id": "relform:acme-cooperative-foods-ltd:0001"
+  },
+  "canonical_mutation": false
+}
