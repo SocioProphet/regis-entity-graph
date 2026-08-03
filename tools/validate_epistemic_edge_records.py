@@ -148,7 +148,7 @@ def semantic_diagnostics(record: dict[str, Any]) -> list[str]:
 
 
 def expected_result(path: Path) -> str:
-    return "fail" if ".rejected." in path.name or path.name.startswith("bad-") else "pass"
+    return "fail" if ".rejected" in path.name or path.name.startswith("bad-") else "pass"
 
 
 def main() -> int:
