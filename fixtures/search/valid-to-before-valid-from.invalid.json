@@ -1,0 +1,14 @@
+{
+  "schema_version": "regis.search.temporal_fact.v0.1",
+  "fact_id": "urn:regis:fact:abc-corp:has_ceo:inverted-interval",
+  "entity": "urn:regis:entity:org:abc-corp",
+  "relation": "HAS_CEO",
+  "value": "John Smith",
+  "valid_from": "2025-01-15T00:00:00Z",
+  "valid_to": "2019-06-01T00:00:00Z",
+  "claims_canonical_truth": false,
+  "provenance": {
+    "source_event_ids": ["evt:pressrel:2019-06-01:abc-appoints-smith"],
+    "artifact_ids": ["artifact:doc:abc-2019-annual-report"]
+  }
+}

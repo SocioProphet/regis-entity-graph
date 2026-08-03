@@ -1,6 +1,6 @@
-.PHONY: validate validate-graph-contracts validate-epistemic-edge-records validate-ioes-graph-extension validate-ner-contracts validate-decision-ledger-seals
+.PHONY: validate validate-graph-contracts validate-epistemic-edge-records validate-ioes-graph-extension validate-ner-contracts validate-decision-ledger-seals validate-temporal-supersession
 
-validate: validate-graph-contracts validate-epistemic-edge-records validate-ioes-graph-extension validate-ner-contracts validate-decision-ledger-seals
+validate: validate-graph-contracts validate-epistemic-edge-records validate-ioes-graph-extension validate-ner-contracts validate-decision-ledger-seals validate-temporal-supersession
 
 validate-graph-contracts:
 	python3 tools/validate_regis_graph_contracts.py
@@ -16,3 +16,6 @@ validate-ner-contracts:
 
 validate-decision-ledger-seals:
 	python3 tools/validate_decision_ledger_seals.py
+
+validate-temporal-supersession:
+	python3 tools/validate_temporal_supersession.py

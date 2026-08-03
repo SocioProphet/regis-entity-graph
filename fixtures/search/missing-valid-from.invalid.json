@@ -1,0 +1,12 @@
+{
+  "schema_version": "regis.search.temporal_fact.v0.1",
+  "fact_id": "urn:regis:fact:abc-corp:has_ceo:no-validfrom",
+  "entity": "urn:regis:entity:org:abc-corp",
+  "relation": "HAS_CEO",
+  "value": "John Smith",
+  "claims_canonical_truth": false,
+  "provenance": {
+    "source_event_ids": ["evt:unknown"],
+    "artifact_ids": ["artifact:unknown"]
+  }
+}
