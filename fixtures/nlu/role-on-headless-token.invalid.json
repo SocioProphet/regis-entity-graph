@@ -1,0 +1,15 @@
+{
+  "schema_version": "regis.nlu.semantic_token_tree.v0.1",
+  "utterance_ref": {"utterance_id": "utt-headless-role", "source_type": "command"},
+  "locality": "CITIZEN_FOG",
+  "parser_version": "regis-nlu@0.1.0",
+  "text": "show contact lists",
+  "tokens": [
+    {"token_id": 0, "surface": "show", "pos": "VB", "dep": "ROOT", "head": null,
+     "semantic_roles": [{"label": "ActionShow", "kind": "ACTION"}]},
+    {"token_id": 1, "surface": "contact", "pos": "NN", "dep": "nn", "head": null,
+     "semantic_roles": [{"label": "ContactLists", "kind": "ENTITY_TYPE"}]},
+    {"token_id": 2, "surface": "lists", "pos": "NNS", "dep": "dobj", "head": 0,
+     "semantic_roles": [{"label": "ContactLists", "kind": "ENTITY_TYPE"}]}
+  ]
+}

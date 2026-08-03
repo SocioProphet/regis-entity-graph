@@ -1,0 +1,103 @@
+{
+  "schema_version": "regis.nlu.semantic_token_tree.v0.1",
+  "utterance_ref": {
+    "utterance_id": "utt-2026-08-03-0007",
+    "source_type": "command",
+    "event_ir_id": "evt-ir-0007"
+  },
+  "locality": "CITIZEN_FOG",
+  "parser_version": "regis-nlu@0.1.0",
+  "text": "show me all contact lists in my org",
+  "tokens": [
+    {
+      "token_id": 0,
+      "surface": "show",
+      "lemma": "show",
+      "pos": "VB",
+      "dep": "ROOT",
+      "head": null,
+      "span": {"start": 0, "end": 4},
+      "semantic_roles": [
+        {"label": "ActionShow", "kind": "ACTION", "evidence": "dep=ROOT"}
+      ]
+    },
+    {
+      "token_id": 1,
+      "surface": "me",
+      "pos": "PRP",
+      "dep": "iobj",
+      "head": 0,
+      "span": {"start": 5, "end": 7},
+      "semantic_roles": [
+        {"label": "ActionShow", "kind": "ACTION", "evidence": "head=show"}
+      ]
+    },
+    {
+      "token_id": 2,
+      "surface": "all",
+      "pos": "DT",
+      "dep": "det",
+      "head": 4,
+      "span": {"start": 8, "end": 11},
+      "semantic_roles": []
+    },
+    {
+      "token_id": 3,
+      "surface": "contact",
+      "pos": "NN",
+      "dep": "nn",
+      "head": 4,
+      "span": {"start": 12, "end": 19},
+      "semantic_roles": [
+        {"label": "ContactLists", "kind": "ENTITY_TYPE", "evidence": "head=lists"}
+      ]
+    },
+    {
+      "token_id": 4,
+      "surface": "lists",
+      "lemma": "list",
+      "pos": "NNS",
+      "dep": "dobj",
+      "head": 0,
+      "span": {"start": 20, "end": 25},
+      "semantic_roles": [
+        {"label": "ContactLists", "kind": "ENTITY_TYPE", "evidence": "dep=dobj"},
+        {"label": "Lists", "kind": "ENTITY_TYPE", "evidence": "dep=dobj"}
+      ]
+    },
+    {
+      "token_id": 5,
+      "surface": "in",
+      "pos": "IN",
+      "dep": "prep",
+      "head": 4,
+      "span": {"start": 26, "end": 28},
+      "semantic_roles": [
+        {"label": "Contains", "kind": "RELATION", "evidence": "dep=prep"},
+        {"label": "Relation", "kind": "RELATION", "evidence": "dep=prep"}
+      ]
+    },
+    {
+      "token_id": 6,
+      "surface": "my",
+      "pos": "PRP$",
+      "dep": "poss",
+      "head": 7,
+      "span": {"start": 29, "end": 31},
+      "semantic_roles": [
+        {"label": "Own", "kind": "POSSESSION", "evidence": "dep=poss"}
+      ]
+    },
+    {
+      "token_id": 7,
+      "surface": "org",
+      "pos": "NN",
+      "dep": "pobj",
+      "head": 5,
+      "span": {"start": 32, "end": 35},
+      "semantic_roles": [
+        {"label": "Organization", "kind": "ENTITY_TYPE", "evidence": "dep=pobj"}
+      ]
+    }
+  ]
+}

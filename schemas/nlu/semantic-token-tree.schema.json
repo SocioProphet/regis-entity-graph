@@ -1,0 +1,185 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://socioprophet.org/schemas/regis/nlu/semantic-token-tree.schema.json",
+  "title": "Regis NLU Semantic Token Tree",
+  "description": "Output contract for the EBA-style semantic token tree (prophet-workspace#76 item 7): a dependency-parsed token tree where each token carries POS + dep (syntactic head-link) + one or more typed SEMANTIC ROLE annotations. This is the syntax-plus-semantic-role layer that sits UPSTREAM of the NER MentionSet (schemas/ner/mention.schema.json) and the EL/ER resolution lane: it annotates the INFORMATION STRUCTURE of an utterance (who/what/how it relates), not specific data. Per EBA, resolution over this tree is restricted and side-effect-free. The genuine gap this fills: SynapseIQ (tree-sitter+LSP, code) owns syntax over source; regis NER owns mention/span typing; neither carries a semantic-role layer over a natural-language dependency tree.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "utterance_ref",
+    "locality",
+    "parser_version",
+    "tokens"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "regis.nlu.semantic_token_tree.v0.1"
+    },
+    "utterance_ref": {
+      "$ref": "#/$defs/UtteranceRef"
+    },
+    "locality": {
+      "description": "Scope/sovereignty boundary where this parse ran. EBA-style resolution is local-first (restricted, side-effect-free); fog/device are protective defaults.",
+      "type": "string",
+      "enum": [
+        "CITIZEN_FOG",
+        "CITIZEN_CLOUD",
+        "INSTITUTION",
+        "ADTECH",
+        "HSM"
+      ]
+    },
+    "parser_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "text": {
+      "description": "Optional raw utterance the tokens index into. Present for auditability; the resolver never consults it as data (information structure only).",
+      "type": "string"
+    },
+    "tokens": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/Token"
+      }
+    }
+  },
+  "$defs": {
+    "UtteranceRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["utterance_id", "source_type"],
+      "properties": {
+        "utterance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_type": {
+          "type": "string",
+          "enum": ["message", "form", "query", "command", "page"]
+        },
+        "event_ir_id": {
+          "description": "Optional link back to the Event-IR record this utterance was normalized into.",
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "SemanticRoleKind": {
+      "description": "Kept in sync with schemas/nlu/semantic-role-kind.schema.json#/$defs/SemanticRoleKind by validate_semantic_token_tree.py.",
+      "type": "string",
+      "enum": [
+        "ACTION",
+        "ENTITY_TYPE",
+        "RELATION",
+        "QUANTIFIER",
+        "POSSESSION",
+        "MODIFIER",
+        "CONTEXT"
+      ]
+    },
+    "SemanticRole": {
+      "description": "A typed semantic-role annotation on a token. `kind` is a closed structural category; `label` is an OPEN, LEARNED symbol (e.g. ActionShow, ContactLists) — not enumerated, per 'learn, don't match dictionaries'.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["label", "kind"],
+      "properties": {
+        "label": {
+          "description": "Learned role symbol in UpperCamelCase (ActionShow, ContactLists, Organization, Contains, Own).",
+          "type": "string",
+          "pattern": "^[A-Z][A-Za-z0-9]*$"
+        },
+        "kind": {
+          "$ref": "#/$defs/SemanticRoleKind"
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "evidence": {
+          "description": "Structural basis for the role (e.g. 'dep=dobj', 'head=show'). Information structure only; never a specific data value.",
+          "type": "string"
+        }
+      }
+    },
+    "Token": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "token_id",
+        "surface",
+        "pos",
+        "dep",
+        "head",
+        "semantic_roles"
+      ],
+      "properties": {
+        "token_id": {
+          "description": "Zero-based position of the token in the utterance; unique within the tree.",
+          "type": "integer",
+          "minimum": 0
+        },
+        "surface": {
+          "type": "string",
+          "minLength": 1
+        },
+        "lemma": {
+          "type": "string",
+          "minLength": 1
+        },
+        "pos": {
+          "description": "Part-of-speech tag (Penn/UD-style), e.g. VB, NN, NNS, PRP, PRP$, IN, DT.",
+          "type": "string",
+          "pattern": "^[A-Z]+\\$?$"
+        },
+        "dep": {
+          "description": "Dependency relation to the head token.",
+          "type": "string",
+          "enum": [
+            "ROOT",
+            "nsubj",
+            "dobj",
+            "iobj",
+            "pobj",
+            "nn",
+            "compound",
+            "prep",
+            "case",
+            "poss",
+            "det",
+            "amod",
+            "advmod",
+            "aux",
+            "cc",
+            "conj",
+            "mark",
+            "punct"
+          ]
+        },
+        "head": {
+          "description": "token_id of the syntactic head. MUST be null for the ROOT token, and MUST be a valid non-self token_id for every other token (enforced by the validator/resolver).",
+          "type": ["integer", "null"],
+          "minimum": 0
+        },
+        "span": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["start", "end"],
+          "properties": {
+            "start": {"type": "integer", "minimum": 0},
+            "end": {"type": "integer", "minimum": 1}
+          }
+        },
+        "semantic_roles": {
+          "description": "Typed semantic-role annotations. Load-bearing deps (ROOT/nsubj/dobj/iobj/pobj/nn/compound/prep/poss) MUST carry at least one role; function tokens (det/punct/aux/cc/...) MAY be empty. Enforced semantically by the resolver.",
+          "type": "array",
+          "items": {"$ref": "#/$defs/SemanticRole"},
+          "default": []
+        }
+      }
+    }
+  }
+}
