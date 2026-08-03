@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.socioprophet.org/regis/acr/decision-ledger-seal.schema.json",
+  "title": "DecisionLedgerSeal",
+  "description": "Additive tamper-evidence + authenticity envelope over an existing DecisionLedgerEntry. Does NOT modify DecisionLedgerEntry (which stays additionalProperties:false); it references the entry by decision_id and commits to its content via entry_hash. Plugs verified estate gaps: the ACR decision ledger is append-only by convention but has no hash-chain, no fork detection, no cryptographic signature, and no idempotency key. A seal supplies all four. Every entry whose canonical_mutation=true SHOULD carry a seal (see contract-pack invariant decision_ledger_is_tamper_evident).",
+  "type": "object",
+  "required": ["seal_id", "decision_id", "chain_id", "seq", "entry_hash", "prev_seal_hash", "idempotency_key", "hash_alg", "canon", "signature", "created_at"],
+  "additionalProperties": false,
+  "properties": {
+    "seal_id": { "type": "string", "description": "ULID/UUIDv7." },
+    "decision_id": { "type": "string", "description": "The DecisionLedgerEntry this seal covers." },
+    "chain_id": { "type": "string", "description": "Per-scope chain (default 'acr:' + canonical-entity or resolution scope). Per-scope chains avoid a single global serialization bottleneck." },
+    "seq": { "type": "integer", "minimum": 0, "description": "Strictly increments per chain_id; two seals citing the same prev_seal_hash in a chain = detected fork." },
+    "entry_hash": { "type": "string", "description": "hash_alg over canon(the referenced DecisionLedgerEntry). Commits the seal to exact entry content (tamper-evidence)." },
+    "prev_seal_hash": { "type": "string", "description": "entry-independent chain link: hash_alg over canon(previous seal in chain_id), or 'GENESIS' for the first." },
+    "idempotency_key": { "type": "string", "description": "hash_alg over canon([decision_id, policy_version, sorted(input_hashes)]). Equal keys => the same decision; a replay does not create a second canonical mutation." },
+    "policy_hash": { "type": ["string", "null"], "description": "Optional content-hash of the exact policy pack applied (stronger than DecisionLedgerEntry.replay.policy_version string). Enables byte-exact replay." },
+    "hash_alg": { "type": "string", "enum": ["blake3-256"], "description": "Estate hash-seal standard. E1: confirm against the estate canonicalizer in WO_FIBER_001." },
+    "canon": { "type": "string", "enum": ["rfc8785-jcs"], "description": "Canonicalization for hashing/signing." },
+    "signature": {
+      "type": "object",
+      "required": ["alg", "key_id", "value"],
+      "additionalProperties": false,
+      "properties": {
+        "alg": { "type": "string", "enum": ["ed25519", "ed25519-frost"], "description": "ed25519 single-signer, or ed25519-frost for threshold/quorum seals (high-blast-radius decisions: merge/split/canonical_promoted)." },
+        "key_id": { "type": "string" },
+        "value": { "type": "string", "description": "signature over entry_hash (hex)." },
+        "threshold": { "type": ["string", "null"], "description": "e.g. '2-of-3' when alg=ed25519-frost." }
+      }
+    },
+    "merkle_checkpoint": {
+      "type": ["object", "null"],
+      "description": "Optional periodic global tamper-evidence: a Merkle root over all active chain heads, giving cross-chain anchoring without cross-chain contention.",
+      "additionalProperties": false,
+      "properties": {
+        "root": { "type": "string" },
+        "covered_chain_heads": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "created_at": { "type": "string", "format": "date-time", "description": "Advisory wall-clock; ordering is by seq/chain, not this field." }
+  }
+}

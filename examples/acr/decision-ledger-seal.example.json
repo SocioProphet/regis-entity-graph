@@ -1,0 +1,18 @@
+{
+  "seal_id": "seal_001",
+  "decision_id": "dl_match_001",
+  "chain_id": "acr:canonical:tesco",
+  "seq": 0,
+  "entry_hash": "426e7d8baac42ba0522961acbe4eb5fea8119af2a0ce4f2735732bc88bf908ff",
+  "prev_seal_hash": "GENESIS",
+  "idempotency_key": "1dd40a77b2c62a3b619485e9b42d0c320c14a9df6ece1170a4ded58d297e8094",
+  "policy_hash": "96226b4728ab44b0e527c3142a9ae63103b918e845c938d838e39d7866b8b5bf",
+  "hash_alg": "blake3-256",
+  "canon": "rfc8785-jcs",
+  "signature": {
+    "alg": "ed25519",
+    "key_id": "regis-steward-1",
+    "value": "27f0b2d81e053bc641479d213eb165cd18ce873c1c51656f4da6a1f382d57c695bd8477b6b2997267d39a7fca204a362f0415f4c25a09c87633d343fd3210a09"
+  },
+  "created_at": "2026-08-03T00:00:00Z"
+}
