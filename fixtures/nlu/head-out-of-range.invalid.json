@@ -1,0 +1,13 @@
+{
+  "schema_version": "regis.nlu.semantic_token_tree.v0.1",
+  "utterance_ref": {"utterance_id": "utt-bad-head", "source_type": "command"},
+  "locality": "CITIZEN_FOG",
+  "parser_version": "regis-nlu@0.1.0",
+  "text": "show lists",
+  "tokens": [
+    {"token_id": 0, "surface": "show", "pos": "VB", "dep": "ROOT", "head": null,
+     "semantic_roles": [{"label": "ActionShow", "kind": "ACTION"}]},
+    {"token_id": 1, "surface": "lists", "pos": "NNS", "dep": "dobj", "head": 99,
+     "semantic_roles": [{"label": "Lists", "kind": "ENTITY_TYPE"}]}
+  ]
+}

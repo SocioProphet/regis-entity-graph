@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://socioprophet.org/schemas/regis/nlu/semantic-role-kind.schema.json",
+  "title": "Regis NLU Semantic Role Kind Taxonomy",
+  "description": "Canonical taxonomy of semantic role KINDS for the EBA-style semantic token tree (prophet-workspace#76 item 7). This is the single source of truth for the closed set of structural role categories; tools/validate_semantic_token_tree.py asserts the enum inlined into semantic-token-tree.schema.json stays in sync. IMPORTANT: only the KIND is a closed vocabulary. The role LABEL (e.g. ActionShow, ContactLists, Organization) is an OPEN, LEARNED vocabulary per the estate rule 'learn, don't match dictionaries' — labels are produced by a learned resolver over the parse's information structure, not enumerated here. This taxonomy governs how a learned label is TYPED, not which labels may exist.",
+  "$defs": {
+    "SemanticRoleKind": {
+      "description": "Structural category a learned semantic-role label is typed as. ACTION: a verb frame / operation the utterance requests (ActionShow). ENTITY_TYPE: a type/class of thing being referenced (ContactLists, Organization, Lists). RELATION: a relation between references (Contains, Relation). QUANTIFIER: scope/quantity over a reference (All, Some). POSSESSION: ownership/attribution (Own). MODIFIER: a qualifying attribute (Recent, Active). CONTEXT: a scope/sensitivity cue attached to the information structure (SensitiveContext).",
+      "type": "string",
+      "enum": [
+        "ACTION",
+        "ENTITY_TYPE",
+        "RELATION",
+        "QUANTIFIER",
+        "POSSESSION",
+        "MODIFIER",
+        "CONTEXT"
+      ]
+    }
+  }
+}
